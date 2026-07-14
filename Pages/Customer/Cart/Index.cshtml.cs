@@ -1,6 +1,8 @@
+using BarberSalon.Data;
 using BarberSalon.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Win32;
 using System.Text.Json;
 
 namespace BarberSalon.Pages.Customer.Cart
@@ -9,7 +11,9 @@ namespace BarberSalon.Pages.Customer.Cart
     {
         public List<CartItem> CartItems { get; set; } = new();
         // property
+
         public decimal SubTotal => CartItems.Sum(x => x.Price * x.Quantity);
+        
 
         public void OnGet()
         {
@@ -21,7 +25,7 @@ namespace BarberSalon.Pages.Customer.Cart
             }
         }
 
-        public IActionResult OnPostRemove(int productId)
+        public async Task<IActionResult> OnPostRemove(int productId)
         {
             var json = HttpContext.Session.GetString("Cart");
 

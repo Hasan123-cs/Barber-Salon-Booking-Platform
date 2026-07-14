@@ -1,0 +1,117 @@
+﻿@page
+@model BarberSalon.Pages.Customer.Appointment.MyAppointmentsModel
+@{
+}
+@{
+    ViewData["Title"] = "My Appointments";
+    Layout = "HomeLayout";
+}
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">My Appointments</h2>
+
+    @if (!Model.Appointments.Any())
+    {
+        <div class="alert alert-info text-center">
+            <h5>No appointments found.</h5>
+            <p>Book your first appointment now.</p>
+
+            <a asp-page="/Customer/Service/Index"
+               class="btn btn-primary">
+                Book Appointment
+            </a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Service</th>
+                    <th>Barber</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th width="160">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            @foreach (var item in Model.Appointments)
+            {
+                <tr>
+
+                    <td>@item.Service.Name</td>
+
+                    <td>@item.Employee.Name</td>
+
+                    <td>@item.AppointmentDate.ToString("dd MMM yyyy")</td>
+
+                    <td>
+                        @item.StartTime -
+                        @item.EndTime
+                    </td>
+
+                    <td>
+
+                        @if (item.Status == Models.Enum.AppointmentStatus.Pending)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        }
+                            else if (item.Status == Models.Enum.AppointmentStatus.Confirmed)
+                        {
+                            <span class="badge bg-primary">
+                                Confirmed
+                            </span>
+                        }
+                            else if (item.Status == Models.Enum.AppointmentStatus.Completed)
+                        {
+                            <span class="badge bg-success">
+                                Completed
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>@item.Notes</td>
+
+                    <td>
+
+                            @if (item.Status == Models.Enum.AppointmentStatus.Pending)
+                        {
+                            <form method="post" asp-page-handler="Cancel">
+
+                                <input type="hidden"
+                                       name="id"
+                                       value="@item.Id"/>
+
+                                <button class="btn btn-danger btn-sm w-100">
+                                    Cancel
+                                </button>
+
+                            </form>
+                        }
+
+                    </td>
+
+                </tr>
+            }
+
+            </tbody>
+
+        </table>
+    }
+
+</div>

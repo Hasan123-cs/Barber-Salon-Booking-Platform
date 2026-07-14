@@ -1,0 +1,110 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Customer.Order.OrderDetailsModel
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "HomeLayout";
+
+}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Order #@Model.Order.Id
+    </h2>
+
+    <div class="card mb-4">
+
+        <div class="card-body">
+
+            <p>
+
+                <strong>Date:</strong>
+
+                @Model.Order.OrderDate.ToString("dd MMM yyyy")
+
+            </p>
+
+            <p>
+
+                <strong>Status:</strong>
+
+                @Model.Order.Status
+
+            </p>
+
+            <p>
+
+                <strong>Payment:</strong>
+
+                @(Model.Order.Payment?.PaymentStatus)
+
+            </p>
+
+            <p>
+
+                <strong>Total:</strong>
+
+                $@Model.Order.TotalAmount
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <table class="table table-bordered">
+
+        <thead class="table-light">
+
+            <tr>
+
+                <th>Product</th>
+
+                <th>Quantity</th>
+
+                <th>Price</th>
+
+                <th>Total</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        @foreach(var item in Model.Order.OrderItems)
+        {
+            <tr>
+
+                <td>
+                    @item.Product.Name
+                </td>
+
+                <td>
+                    @item.Quantity
+                </td>
+
+                <td>
+                    $@item.Price
+                </td>
+
+                <td>
+                    $@(item.Price * item.Quantity)
+                </td>
+
+            </tr>
+        }
+
+        </tbody>
+
+    </table>
+
+    <a asp-page="/Customer/Order/MyOrders"
+       class="btn btn-secondary">
+
+        Back to Orders
+
+    </a>
+
+</div>

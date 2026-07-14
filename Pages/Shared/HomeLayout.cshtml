@@ -92,7 +92,6 @@
                         <li class="nav-item dropdown">
 
                             <a class="nav-link dropdown-toggle"
-                               href="#"
                                role="button"
                                data-bs-toggle="dropdown">
 
@@ -105,7 +104,8 @@
 
                                 <li>
                                     <a class="dropdown-item"
-                                       asp-page="/Account/Manage/Index">
+                                       href="/Account/Manage"
+                                       >
                                         <i class="bi bi-person"></i>
                                         Profile
                                     </a>
@@ -113,7 +113,7 @@
 
                                 <li>
                                     <a class="dropdown-item"
-                                       asp-page="/Appointments/MyAppointments">
+                                       href="/Customer/Appointment/MyAppointments">
                                         <i class="bi bi-calendar-check"></i>
                                         My Appointments
                                     </a>
@@ -128,7 +128,7 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item"
-                                       asp-page="/Order/History">
+                                       href="/Customer/Order/MyOrders">
                                         <i class="bi bi-box-seam"></i>
                                         My Orders
                                     </a>

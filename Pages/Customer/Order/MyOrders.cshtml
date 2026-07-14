@@ -1,0 +1,139 @@
+﻿@page
+@model BarberSalon.Pages.Customer.Order.MyOrdersModel
+
+@{
+    ViewData["Title"] = "My Orders";
+    Layout = "HomeLayout";
+}
+@using BarberSalon.Models.Enum
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold mb-4">
+        My Orders
+    </h2>
+
+    @if (!Model.Orders.Any())
+    {
+        <div class="alert alert-info text-center">
+
+            <h5>No orders yet.</h5>
+
+            <p>
+                Your completed purchases will appear here.
+            </p>
+
+            <a asp-page="/Customer/Product/Index"
+               class="btn btn-primary">
+                Continue Shopping
+            </a>
+
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover table-bordered align-middle">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Date</th>
+
+                    <th>Total</th>
+
+                    <th>Payment</th>
+
+                    <th>Status</th>
+
+                    <th width="150">Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            @foreach(var order in Model.Orders)
+            {
+                <tr>
+
+                    <td>
+                        #@order.Id
+                    </td>
+
+                    <td>
+                        @order.OrderDate.ToString("dd MMM yyyy")
+                    </td>
+
+                    <td>
+                        $@order.TotalAmount
+                    </td>
+
+                    <td>
+
+                        @if(order.Payment != null)
+                        {
+                            @order.Payment.PaymentStatus
+                        }
+                        else
+                        {
+                            <span class="text-muted">
+                                -
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        @if(order.Status == OrderStatus.Pending)
+                        {
+                            <span class="badge bg-warning">
+                                Pending
+                            </span>
+                        }
+                        else if(order.Status == OrderStatus.Processing)
+                        {
+                            <span class="badge bg-primary">
+                                Processing
+                            </span>
+                        }
+                        else if(order.Status == OrderStatus.Completed)
+                        {
+                            <span class="badge bg-success">
+                                Completed
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                Cancelled
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <a asp-page="/Customer/Order/OrderDetails"
+                           asp-route-id="@order.Id"
+                           class="btn btn-outline-primary btn-sm">
+
+                            View Details
+
+                        </a>
+
+                    </td>
+
+                </tr>
+            }
+
+            </tbody>
+
+        </table>
+    }
+
+</div>

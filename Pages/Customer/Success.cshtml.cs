@@ -21,14 +21,14 @@ namespace BarberSalon.Pages.Customer
                     Title = "Order Placed Successfully!";
                     Message = "Thank you for your purchase. Your order has been received and is now being processed.";
                     ButtonText = "View Orders";
-                    ButtonUrl = "/Customer/Orders/Index";
+                    ButtonUrl = "/Customer/Order/MyOrders";
                     break;
 
                 case "appointment":
                     Title = "Appointment Booked!";
                     Message = "Your appointment has been booked successfully.";
                     ButtonText = "My Appointments";
-                    ButtonUrl = "/Customer/Appointment/Index";
+                    ButtonUrl = "/Customer/Appointment/MyAppointments";
                     break;
 
                 

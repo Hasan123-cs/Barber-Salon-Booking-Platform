@@ -13,6 +13,14 @@ namespace BarberSalon.Services.Interfaces
         public Task<BarberSalon.Models.Product> getProductById(int id);
         public Task AddToCart(int id, int qty);
         Task<bool> MakeTheOrder(ApplicationUser user,List<CartItem> cart,string paymentMethod);
+        public  Task<List<BarberSalon.Models.Appointment>> GetAppointmentById(string id);
+        public Task CancelAppointment(int id, string userId);
+        public Task<List<BarberSalon.Models.Order>> GetAllOrderByUser(string id);
+        public Task<BarberSalon.Models.Order> LoadOrderById(int id, string uid);
+
+
+
+
 
 
 
