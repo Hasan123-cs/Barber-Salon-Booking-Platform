@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BarberSalon.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -109,6 +109,9 @@ namespace BarberSalon.Migrations
 
                     b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("text");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("integer");
@@ -235,9 +238,8 @@ namespace BarberSalon.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("TotalAmount")
                         .HasPrecision(18, 2)
@@ -301,13 +303,11 @@ namespace BarberSalon.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("integer");
 
-                    b.Property<string>("PaymentStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("integer");
 
                     b.HasKey("PaymentId");
 
@@ -334,6 +334,9 @@ namespace BarberSalon.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -397,11 +400,17 @@ namespace BarberSalon.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Day")
+                        .HasColumnType("integer");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("integer");
 
                     b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
+
+                    b.Property<bool>("IsOffDay")
+                        .HasColumnType("boolean");
 
                     b.Property<TimeOnly>("StartTime")
                         .HasColumnType("time");

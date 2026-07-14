@@ -36,7 +36,7 @@ namespace BarberSalon.Pages.Account
             }
             else if (usercheck == 3)
             {
-                return RedirectToPage("/Customer/Index");
+                return RedirectToPage("/Customer/Home/Index");
             }
             else
             {

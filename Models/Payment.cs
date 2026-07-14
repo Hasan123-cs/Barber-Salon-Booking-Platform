@@ -1,4 +1,6 @@
-﻿namespace BarberSalon.Models
+﻿using BarberSalon.Models.Enum;
+
+namespace BarberSalon.Models
 {
     public class Payment
     {
@@ -8,9 +10,9 @@
 
         public decimal Amount { get; set; }
 
-        public string PaymentMethod { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
 
-        public string PaymentStatus { get; set; }
+        public StatusOfPayment PaymentStatus { get; set; }
 
         public DateTime PaymentDate { get; set; }
 

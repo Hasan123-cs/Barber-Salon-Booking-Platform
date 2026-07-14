@@ -9,10 +9,12 @@ namespace BarberSalon.Services.Implements
     {
         public AppDbContext _db;
         public SignInManager<ApplicationUser> _manager;
-        public AccountServices(AppDbContext db, SignInManager<ApplicationUser> manager)
+        public UserManager<ApplicationUser> _usermanager;
+        public AccountServices(AppDbContext db, SignInManager<ApplicationUser> manager, UserManager<ApplicationUser> usermanager)
         {
             _db = db;
             _manager = manager;
+            _usermanager = usermanager;
         }
         public async Task<int> LoginUser(LoginBindingModel l)
         {
@@ -35,6 +37,23 @@ namespace BarberSalon.Services.Implements
             }
             return -1;
            
+        }
+        public async Task<List<string>> RegisterUser(RegisterBindingViewModel b)
+        {
+            var user = new ApplicationUser()
+            {
+                UserName = b.Email,
+                Email = b.Email,
+                PhoneNumber=b.PhoneNumber,
+                FullName=b.FullName,
+
+            };
+            var result = await _usermanager.CreateAsync(user, b.Password);
+            if(result.Succeeded)
+            {
+                return [];
+            }
+            return result.Errors.Where(r => r.Code!="DuplicateUserName").Select(x => x.Description).ToList(); 
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace BarberSalon.Models
+﻿using BarberSalon.Models.Enum;
+
+namespace BarberSalon.Models
 {
     public class Order
     {
@@ -10,7 +12,7 @@
 
         public decimal TotalAmount { get; set; }
 
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public ApplicationUser User { get; set; }
 

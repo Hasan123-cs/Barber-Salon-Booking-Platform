@@ -1,0 +1,59 @@
+﻿.hero {
+    background: linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)), url('/images/barber-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 520px;
+    color: white;
+    border-radius: 20px;
+}
+
+.service-card,
+.product-card,
+.employee-card {
+    transition: .3s;
+    border: none;
+    border-radius: 18px;
+}
+
+    .service-card:hover,
+    .product-card:hover,
+    .employee-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0,0,0,.15);
+    }
+
+.card img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.btn-pink {
+    background: #C2185B;
+    color: white;
+}
+
+    .btn-pink:hover {
+        background: #a8144c;
+        color: white;
+    }
+
+.btn-outline-pink {
+    border: 2px solid #C2185B;
+    color: #C2185B;
+}
+.service-card .card-body p {
+    height: 64px;
+}
+    .btn-outline-pink:hover {
+        background: #C2185B;
+        color: white;
+    }
+
+body {
+    background: #f8f9fa;
+}

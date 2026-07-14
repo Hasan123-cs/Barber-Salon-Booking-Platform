@@ -15,7 +15,7 @@ namespace BarberSalon.Models
         public DateTime AppointmentDate { get; set; }
 
         public TimeOnly StartTime { get; set; }
-
+        public string? Notes { get; set; }
         public TimeOnly EndTime { get; set; }
 
         public AppointmentStatus Status { get; set; }

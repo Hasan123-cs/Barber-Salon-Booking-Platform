@@ -14,7 +14,7 @@ namespace BarberSalon.Pages
 
         public IActionResult OnGet()
         {
-           return RedirectToPage("/Account/Login");
+           return RedirectToPage("/Customer/Home/Index");
         }
     }
 }

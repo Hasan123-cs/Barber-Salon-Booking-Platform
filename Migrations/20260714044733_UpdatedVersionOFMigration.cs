@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BarberSalon.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSchema : Migration
+    public partial class UpdatedVersionOFMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -225,7 +225,7 @@ namespace BarberSalon.Migrations
                     UserId = table.Column<string>(type: "text", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    Status = table.Column<string>(type: "text", nullable: false)
+                    Status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -249,7 +249,8 @@ namespace BarberSalon.Migrations
                     Price = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
                     StockStatus = table.Column<int>(type: "integer", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: true),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -273,6 +274,7 @@ namespace BarberSalon.Migrations
                     ServiceId = table.Column<int>(type: "integer", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Notes = table.Column<string>(type: "text", nullable: true),
                     EndTime = table.Column<TimeOnly>(type: "time", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -333,8 +335,10 @@ namespace BarberSalon.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EmployeeId = table.Column<int>(type: "integer", nullable: false),
+                    Day = table.Column<int>(type: "integer", nullable: false),
                     StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false)
+                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    IsOffDay = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -355,8 +359,8 @@ namespace BarberSalon.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderId = table.Column<int>(type: "integer", nullable: false),
                     Amount = table.Column<decimal>(type: "numeric(18,2)", precision: 18, scale: 2, nullable: false),
-                    PaymentMethod = table.Column<string>(type: "text", nullable: false),
-                    PaymentStatus = table.Column<string>(type: "text", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "integer", nullable: false),
+                    PaymentStatus = table.Column<int>(type: "integer", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
