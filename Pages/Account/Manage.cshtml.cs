@@ -1,10 +1,12 @@
 using BarberSalon.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Account
 {
+    [Authorize]
     public class ManageModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

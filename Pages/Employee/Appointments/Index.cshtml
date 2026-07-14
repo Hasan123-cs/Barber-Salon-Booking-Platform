@@ -1,0 +1,169 @@
+﻿@page
+@model BarberSalon.Pages.Employee.Appointments.IndexModel
+@{
+    ViewData["Title"] = "My Appointments";
+    Layout = "EmployeeLayout";
+}
+
+<style>
+
+    .table tbody tr:hover {
+        background: #fff9e6;
+    }
+
+    .badge {
+        font-size: .85rem;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+
+</style>
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold">
+                <i class="bi bi-calendar-check text-warning"></i>
+                My Appointments
+            </h2>
+
+            <p class="text-muted mb-0">
+                View and manage your upcoming appointments.
+            </p>
+        </div>
+
+    </div>
+
+    @if (Model.Appointments.Any())
+    {
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Date</th>
+
+                                <th>Time</th>
+
+                                <th>Customer</th>
+
+                                <th>Service</th>
+
+                                <th>Status</th>
+
+                                <th></th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model.Appointments)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @item.AppointmentDate.ToString("dd MMM yyyy")
+                                    </td>
+
+                                    <td>
+                                        @item.StartTime -
+                                        @item.EndTime
+                                    </td>
+
+                                    <td>
+                                        <strong>@item.User.FullName</strong>
+                                    </td>
+
+                                    <td>
+                                        @item.Service.Name
+                                    </td>
+
+                                    <td>
+
+                                        @if (item.Status == BarberSalon.Models.Enum.AppointmentStatus.Pending)
+                                        {
+                                            <span class="badge bg-warning text-dark px-3 py-2">
+                                                Pending
+                                            </span>
+                                        }
+                                        else if (item.Status == BarberSalon.Models.Enum.AppointmentStatus.Completed)
+                                        {
+                                            <span class="badge bg-success px-3 py-2">
+                                                Completed
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger px-3 py-2">
+                                                Cancelled
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        <a asp-page="Details"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-dark btn-sm rounded-pill">
+
+                                            <i class="bi bi-eye"></i>
+
+                                            Details
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body text-center py-5">
+
+                <i class="bi bi-calendar-x display-2 text-warning"></i>
+
+                <h3 class="mt-3">
+
+                    No Appointments
+
+                </h3>
+
+                <p class="text-muted">
+
+                    You don't have any appointments assigned.
+
+                </p>
+
+            </div>
+
+        </div>
+    }
+
+</div>

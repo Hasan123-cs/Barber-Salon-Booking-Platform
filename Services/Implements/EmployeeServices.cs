@@ -1,21 +1,26 @@
 ﻿using BarberSalon.Data;
-using Microsoft.EntityFrameworkCore;
-using BarberSalon.Services.Interfaces;
 using BarberSalon.Models;
+using BarberSalon.Models.BindingModel;
+using BarberSalon.Models.Enum;
+using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 namespace BarberSalon.Services.Implements
 {
     public class EmployeeServices : IEmployeeServices
     {
         public AppDbContext _db;
-
+        public UserManager<ApplicationUser> _userManager;
         public async Task<List<EmployeeService>> GetAllEmployee(int serviceID) { 
             var result = await _db.EmployeeServices.Where(x=>x.ServiceId == serviceID).Include(x => x.Employee).ToListAsync();
             return result; 
         }
 
-        public EmployeeServices(AppDbContext _db)
+        public EmployeeServices(AppDbContext _db, UserManager<ApplicationUser> userManager)
         {
             this._db = _db;
+            _userManager = userManager;
         }
         public async Task<List<BarberSalon.Models.Employee>> GetFirstThreeProfesionalEmployee()
         {
@@ -29,6 +34,61 @@ namespace BarberSalon.Services.Implements
              .Where(c => c.IsActive)
              .ToListAsync();
             return Categories;
+        }
+        public async Task<EmployeeDashboardVM> GetDashboard(ClaimsPrincipal principal)
+        {
+            var user = await _userManager.GetUserAsync(principal);
+
+            var employee = await _db.Employees.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+            if (employee == null)
+            {
+                return new EmployeeDashboardVM();
+            }
+
+            DateTime today = DateTime.UtcNow.Date;
+
+            var appointments = await _db.Appointments
+                .Include(x => x.User)
+                .Include(x => x.Service)
+                .Where(x =>
+                    x.EmployeeId == employee.Id &&
+                    x.AppointmentDate.Date == today)
+                .OrderBy(x => x.StartTime)
+                .ToListAsync();
+
+            return new EmployeeDashboardVM
+            {
+                TodayAppointments = appointments,
+
+                TodayCount = appointments.Count,
+
+                PendingCount = appointments.Count(x =>
+                    x.Status == AppointmentStatus.Pending),
+
+                CompletedCount = appointments.Count(x =>
+                    x.Status == AppointmentStatus.Completed),
+
+                CancelledCount = appointments.Count(x =>
+                    x.Status == AppointmentStatus.Cancelled)
+            };
+        }
+        public async Task<List<Appointment>> GetMyAppointments(string userId)
+        {
+            var employee = await _db.Employees.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (employee == null)
+            {
+                return new List<Appointment>();
+            }
+
+            return await _db.Appointments
+                .Include(x => x.User)
+                .Include(x => x.Service)
+                .Where(x => x.EmployeeId == employee.Id)
+                .OrderBy(x => x.AppointmentDate)
+                .ThenBy(x => x.StartTime)
+                .ToListAsync();
         }
     }
 }
