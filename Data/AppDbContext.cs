@@ -1,6 +1,7 @@
 ﻿using BarberSalon.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Xml;
 
 namespace BarberSalon.Data
 {
@@ -134,7 +135,11 @@ namespace BarberSalon.Data
             // indexs 
             // this create index on employeeService
             // isunique i do it for no duplication (employee link to 3 service it be like a table)
-            // with isunique we avoid this problem of duplication 
+            // with isunique we avoid this problem of duplication
+            // (EmployeeId + AppointmentDate + StartTime) must be unique
+            // cannot have two appointments at the same date and start time
+
+
             builder.Entity<EmployeeService>()
                 .HasIndex(es => new { es.EmployeeId, es.ServiceId })
                 .IsUnique();
@@ -146,7 +151,10 @@ namespace BarberSalon.Data
             a.EmployeeId,
             a.AppointmentDate,
             a.StartTime
-        });
+        })
+// here the key for no race conditions add the is unique constraint (mention in exam ) 
+// so if 2 click at same time because we use the isunique it can get only 1 and the other return deuplicate key exception
+        .IsUnique();
 
             // so many time search for employee by name 
             builder.Entity<Employee>()

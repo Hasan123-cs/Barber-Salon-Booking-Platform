@@ -1,0 +1,110 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Customer.Order.IndexModel
+@{
+    ViewData["Title"] = "Product Details";
+    Layout = "HomeLayout";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="row g-0">
+            <div class="col-lg-6">
+
+                <img src="@Model.Product.ImageUrl"
+                     class="img-fluid w-100 h-100"
+                     style="object-fit:cover; min-height:500px;"
+                     alt="@Model.Product.Name"/>
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <div class="p-5 h-100 d-flex flex-column">
+
+                    <span class="badge bg-warning text-dark mb-3 px-3 py-2">
+                        @Model.Product.Category.Name
+                    </span>
+
+                    <h1 class="fw-bold mb-3">
+                        @Model.Product.Name
+                    </h1>
+
+                    <p class="text-muted fs-5">
+                        @Model.Product.Description
+                    </p>
+
+                    <hr>
+
+                    <h2 class="text-warning fw-bold mb-4">
+                        $@Model.Product.Price
+                    </h2>
+
+                    @if(Model.Product.StockStatus > 0)
+                    {
+                        <span class="badge bg-success fs-6 mb-4">
+                            In Stock (@Model.Product.StockStatus Left)
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6 mb-4">
+                            Out of Stock
+                        </span>
+                    }
+
+                    <form method="post">
+
+                        <input type="hidden"
+                               asp-for="Product.Id"/>
+
+                        <input type="hidden"
+                               asp-for="Product.CategoryId" />
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Quantity
+                            </label>
+
+                            <input asp-for="Quantity"
+                                   type="number"
+                                   min="1"
+                                   max="@Model.Product.StockStatus"
+                                   value="1"
+                                   class="form-control form-control-lg"/>
+
+                        </div>
+
+                        <button class="btn btn-warning btn-lg w-100">
+
+                            <i class="bi bi-cart-plus-fill"></i>
+
+                            Add To Cart
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+.card{
+    border-radius:20px;
+}
+
+.btn-warning{
+    font-weight:600;
+}
+
+</style>

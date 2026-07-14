@@ -1,0 +1,28 @@
+﻿@page "{key}"
+@model BarberSalon.Pages.Customer.SuccessModel
+
+
+@{
+    Layout = "HomeLayout";
+    ViewData["Title"] = "Success";
+}
+
+<div class="container mt-5">
+    <div class="card shadow border-0 text-center p-5">
+
+        <div class="display-1 text-success">
+            ✔
+        </div>
+
+        <h2 class="fw-bold mt-3">@Model.Title</h2>
+
+        <p class="text-muted mt-3">
+            @Model.Message
+        </p>
+
+        <a href="@Model.ButtonUrl" class="btn btn-success mt-4">
+            @Model.ButtonText
+        </a>
+
+    </div>
+</div>

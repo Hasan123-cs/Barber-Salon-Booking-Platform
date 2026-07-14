@@ -1,0 +1,188 @@
+﻿@page "{serviceId:int}"
+@model BarberSalon.Pages.Customer.Appointment.IndexModel
+
+@{
+    ViewData["Title"] = "Book Appointment";
+    Layout = "HomeLayout";
+}
+<body style="background-color:#eee">
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-warning">
+
+                    <h3 class="mb-0">
+                        Book Appointment
+                    </h3>
+
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Service Information -->
+
+                    <div class="border rounded p-3 mb-4">
+
+                        <h4>@Model.Service.Name</h4>
+
+                        <p class="text-muted">
+                            @Model.Service.Description
+                        </p>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <strong>Price</strong>
+
+                                <p>$@Model.Service.Price</p>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <strong>Duration</strong>
+
+                                <p>@Model.Service.Duration Minutes</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <form method="post">
+
+                        <input asp-for="Appointment.ServiceId" type="hidden" />
+
+                        <!-- Barber choising  -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Choose Barber
+                            </label>
+
+                            <select asp-for="Appointment.EmployeeId"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select Barber
+                                </option>
+
+                                @foreach (var employee in Model.EmployeeList)
+                                {
+                                    <option value="@employee.EmployeeId">
+                                        @employee.Employee.Name
+                                    </option>
+                                }
+
+                            </select>
+
+                            <span asp-validation-for="Appointment.EmployeeId"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Date -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Appointment Date
+                            </label>
+
+                            <input asp-for="SelectedDate"
+                                   type="date"
+                                   value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                   class="form-control" />
+
+                            <span asp-validation-for="SelectedDate"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Load the Time  -->
+                        <button type="submit"
+                                asp-page-handler="LoadTimes"
+                                class="btn btn-outline-warning mb-4">
+
+                            Check Available Times
+
+                        </button>
+
+                        <!-- Available Times we Have  -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Available Times
+                            </label>
+
+                            <select asp-for="SelectedTime"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select Time
+                                </option>
+
+                                @foreach (var time in Model.AvailableTimes)
+                                {
+                                    <option value="@time">
+                                        @time
+                                    </option>
+                                }
+
+                            </select>
+
+                            <span asp-validation-for="SelectedTime"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <!-- Notes if have  -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Notes
+                            </label>
+
+                            <textarea asp-for="Appointment.Notes"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Optional notes..."></textarea>
+
+                        </div>
+
+
+                        <button type="submit"
+                                asp-page-handler="Book"
+                                class="btn btn-warning w-100">
+
+                            Book Appointment
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    }
+</body>

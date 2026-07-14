@@ -4,6 +4,6 @@
     {
         public  Task<List<BarberSalon.Models.Employee>> GetFirstThreeProfesionalEmployee();
         public  Task<List<BarberSalon.Models.Category>> GetCategorys();
-
+        public Task<List<BarberSalon.Models.EmployeeService>> GetAllEmployee(int serviceID);
     }
 }

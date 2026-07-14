@@ -42,7 +42,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
     options.Cookie.HttpOnly = true;
 });
-
+// configure session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(2);
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,7 +58,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -61,5 +67,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+// get an hash password to test data (dome testing)
+
+
 
 app.Run();

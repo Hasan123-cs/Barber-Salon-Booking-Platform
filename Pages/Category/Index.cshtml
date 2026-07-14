@@ -1,0 +1,113 @@
+﻿@page "{categoryId:int}"
+@model BarberSalon.Pages.Category.IndexModel
+@{
+    ViewData["Title"] = "Products";
+    Layout = "HomeLayout";
+}
+<link rel="stylesheet" href="/css//CategoryCss.css" />
+<div class="container py-5">
+
+    <div class="rounded-4 p-5 mb-5 text-center text-white shadow-lg"
+         style="background:linear-gradient(135deg,#212529,#000);">
+
+        <span class="badge bg-warning text-dark fs-6 px-3 py-2 mb-3">
+            BARBER SHOP
+        </span>
+
+        <h1 class="display-5 fw-bold">
+            @Model.Category.Name
+        </h1>
+
+        <p class="lead text-light opacity-75 mb-0">
+            @Model.Category.Description
+        </p>
+
+    </div>
+
+   
+
+    <!-- Products -->
+
+    <div class="row g-4">
+
+        @foreach (var item in Model.Products)
+        {
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow product-card h-100">
+
+                    <div class="position-relative">
+
+                        <img src="~/images/@item.ImageUrl"
+                             class="card-img-top"
+                             style="height:260px;object-fit:cover;"
+                             alt="@item.Name" />
+
+                        @if (item.StockStatus > 0)
+                        {
+                            <span class="badge bg-success position-absolute top-0 end-0 m-3 px-3 py-2">
+                                In Stock
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-3 px-3 py-2">
+                                Sold Out
+                            </span>
+                        }
+
+                    </div>
+
+
+                    <div class="card-body d-flex flex-column">
+
+                        <h5 class="fw-bold">
+                            @item.Name
+                        </h5>
+
+                        <p class="text-muted small flex-grow-1">
+                            @item.Description
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+
+                            <h4 class="text-warning fw-bold mb-0">
+                                $@item.Price
+                            </h4>
+
+                            <a href="/Customer/Order/@item.Id"
+                               
+                               class="btn btn-dark rounded-pill">
+
+                                <i class="bi bi-eye-fill"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+    @if (!Model.Products.Any())
+    {
+        <div class="text-center py-5">
+
+            <i class="bi bi-box display-1 text-warning"></i>
+
+            <h2 class="fw-bold mt-3">
+                No Products Available
+            </h2>
+
+            <p class="text-muted">
+                This category doesn't contain any products yet.
+            </p>
+
+        </div>
+    }
+
+</div>

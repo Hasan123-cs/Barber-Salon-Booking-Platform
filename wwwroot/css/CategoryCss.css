@@ -1,0 +1,27 @@
+﻿
+.product-card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all .35s ease;
+}
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 2rem rgba(0,0,0,.15) !important;
+    }
+
+.card-img-top {
+    transition: .4s;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.btn-dark {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

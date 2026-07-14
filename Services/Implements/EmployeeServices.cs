@@ -1,11 +1,18 @@
 ﻿using BarberSalon.Data;
 using Microsoft.EntityFrameworkCore;
 using BarberSalon.Services.Interfaces;
+using BarberSalon.Models;
 namespace BarberSalon.Services.Implements
 {
     public class EmployeeServices : IEmployeeServices
     {
         public AppDbContext _db;
+
+        public async Task<List<EmployeeService>> GetAllEmployee(int serviceID) { 
+            var result = await _db.EmployeeServices.Where(x=>x.ServiceId == serviceID).Include(x => x.Employee).ToListAsync();
+            return result; 
+        }
+
         public EmployeeServices(AppDbContext _db)
         {
             this._db = _db;

@@ -4,7 +4,7 @@ namespace BarberSalon.Models
 {
     public class Payment
     {
-        public int PaymentId { get; set; }
+        public int Id { get; set; }
 
         public int OrderId { get; set; }
 
