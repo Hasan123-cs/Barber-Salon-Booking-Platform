@@ -63,7 +63,7 @@ namespace BarberSalon.Pages.Admin.Schedule
                 // validate the dats
                 if (!item.IsOffDay && item.StartTime >= item.EndTime)
                 {
-                    Console.WriteLine("hisssssssssssss");
+                    Console.WriteLine("Test the item object");
 
                     ModelState.AddModelError("", $"{item.Day}: Start Time must be before End Time.");
                     return Page();
@@ -73,14 +73,14 @@ namespace BarberSalon.Pages.Admin.Schedule
 
                 if (existing== null )
                 {
-                    Console.WriteLine("hisssss");
+                    Console.WriteLine("check exist null state ");
 
                     item.EmployeeId = EmployeeId;
                     await admin.AddWorkingHours(item);
                 }
                 else
                 {
-                    Console.WriteLine("hi");
+                    Console.WriteLine("check exist not null state");
                     await admin.UpdateWorkingHours(existing.Id, item);
 
                 }

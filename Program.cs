@@ -55,7 +55,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     // secure session for example by using httponly or cookie.securepolicy (accept only https)
     // ExpireTimeSpan maximum user can login 30 min into our website 
     // SlidingExpiration this mean if user do any activity re add the time example from 1 to 30 if user 
-    // click on 15 its now to 45 not 30 
+    // click on 15 its now to 45 not 30
     options.LoginPath = "/Account/Login";
     options.Cookie.MaxAge = null;
     options.AccessDeniedPath = "/Account/Login";

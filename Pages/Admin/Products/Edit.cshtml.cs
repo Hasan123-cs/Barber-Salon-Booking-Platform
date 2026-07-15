@@ -45,15 +45,17 @@ namespace BarberSalon.Pages.Admin.Products
             CategoryList = await admin.GetallCategoryActive();
             if(!ModelState.IsValid)
             {
-                foreach (var item in ModelState)
-                {
-                    foreach (var error in item.Value.Errors)
-                    {
-                        Console.WriteLine($"{item.Key} => {error.ErrorMessage}");
-                    }
-                }
+                // debuging !! 
+                //foreach (var item in ModelState)
+                //{
+                //    foreach (var error in item.Value.Errors)
+                //    {
+                //        Console.WriteLine($"{item.Key} => {error.ErrorMessage}");
+                //    }
+                //}
                 return Page();
             }
+            
             var p = await _db.Products.FindAsync(Product.Id);
             if(p is null)
             {
