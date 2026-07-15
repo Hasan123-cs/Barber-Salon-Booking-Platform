@@ -42,10 +42,14 @@
 
                     <th>Products</th>
 
+                    <th>Payment Method</th>
+
+                    <th>Payment Status</th>
+
                     <th>Status</th>
 
                     <th>Action</th>
-
+                    
                 </tr>
 
                 </thead>
@@ -55,6 +59,8 @@
                 @foreach (var order in Model.Orders)
                 {
 
+                        var paymentStatus = order.Payment?.PaymentStatus;
+                        var method = order.Payment?.PaymentMethod;
                     <tr>
 
                         <td>@order.Id</td>
@@ -79,6 +85,9 @@
                             }
 
                         </td>
+                        <td>@method</td>
+
+                        <td>@paymentStatus</td>
 
                             <form method="post">
                         <td>

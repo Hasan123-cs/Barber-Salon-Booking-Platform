@@ -54,6 +54,7 @@ namespace BarberSalon.Services.Implements
             var result = await _usermanager.CreateAsync(user, b.Password);
             if (result.Succeeded)
             {
+                 await _usermanager.AddToRoleAsync(user, "Customer");
                 return [];
             }
             return result.Errors.Where(r => r.Code != "DuplicateUserName").Select(x => x.Description).ToList();
@@ -82,6 +83,7 @@ namespace BarberSalon.Services.Implements
                     FullName = "System Admin",
                     UserName = email,
                     Email = email,
+                    // its mean trust the email imagine as confirmation via gmail 
                     EmailConfirmed = true
                 };
 

@@ -262,11 +262,11 @@ namespace BarberSalon.Services.Implements
         }
         public async Task<List<BarberSalon.Models.Order>> GetOrders()
         {
-            return  await _db.Orders
-
+            return await _db.Orders
                 .Include(o => o.User)
                 .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.Product)
+                .Include(o => o.Payment)
                 .OrderByDescending(o => o.OrderDate)
                 .ToListAsync();
         }

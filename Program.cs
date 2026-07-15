@@ -6,6 +6,7 @@ using BarberSalon.Services.Interfaces;
 using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 
 Env.Load();
@@ -51,11 +52,17 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     // login for the non authenticated user return also if access denied happen (user enter the admin dashboard)'
     // httponly use for secure from xss attack from java script by reading the cookie 
-
+    // secure session for example by using httponly or cookie.securepolicy (accept only https)
+    // ExpireTimeSpan maximum user can login 30 min into our website 
+    // SlidingExpiration this mean if user do any activity re add the time example from 1 to 30 if user 
+    // click on 15 its now to 45 not 30 
     options.LoginPath = "/Account/Login";
     options.Cookie.MaxAge = null;
     options.AccessDeniedPath = "/Account/Login";
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.SlidingExpiration = true;
 });
 // configure session
 builder.Services.AddDistributedMemoryCache();
