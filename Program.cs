@@ -3,11 +3,23 @@ using BarberSalon.Models;
 using BarberSalon.Services;
 using BarberSalon.Services.Implements;
 using BarberSalon.Services.Interfaces;
+using DotNetEnv;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
+Env.Load();
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+// to still work without change all we do for env variable 
+
+builder.Configuration["ConnectionStrings:DefaultConnection"] =Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
+builder.Configuration["Supabase:Url"] =Environment.GetEnvironmentVariable("SUPABASE_URL");
+
+builder.Configuration["Supabase:Key"] =Environment.GetEnvironmentVariable("SUPABASE_KEY");
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
