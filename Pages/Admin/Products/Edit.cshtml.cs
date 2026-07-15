@@ -13,10 +13,11 @@ namespace BarberSalon.Pages.Admin.Products
     public class EditModel : PageModel
     {
         [BindProperty]
-        public Models.Product Product { get; set; } = new();
+        public BarberSalon.Models.Product Product { get; set; } = new();
 
         [BindProperty]
         public IFormFile? ProductImage { get; set; }
+
 
         public List<BarberSalon.Models.Category> CategoryList { get; set; } = new();
         public IAdminService admin;
@@ -40,9 +41,17 @@ namespace BarberSalon.Pages.Admin.Products
         }
         public async Task<IActionResult> OnPost()
         {
+            Console.WriteLine($"{Product.Name}");
             CategoryList = await admin.GetallCategoryActive();
             if(!ModelState.IsValid)
             {
+                foreach (var item in ModelState)
+                {
+                    foreach (var error in item.Value.Errors)
+                    {
+                        Console.WriteLine($"{item.Key} => {error.ErrorMessage}");
+                    }
+                }
                 return Page();
             }
             var p = await _db.Products.FindAsync(Product.Id);

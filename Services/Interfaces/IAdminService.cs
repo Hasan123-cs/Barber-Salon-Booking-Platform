@@ -1,5 +1,6 @@
 ﻿using BarberSalon.Models;
 using BarberSalon.Models.BindingModel;
+using BarberSalon.Models.Enum;
 
 namespace BarberSalon.Services.Interfaces
 {
@@ -19,10 +20,40 @@ namespace BarberSalon.Services.Interfaces
         public  Task AddProduct(BarberSalon.Models.Product s);
 
         public  Task<BarberSalon.Models.Product> GetProductById(int id);
+        public  Task<List<Employee>> GetEmployeesInDB();
+
+        public Task<List<WorkingHour>> LoadSchedule(int eid);
+        public  Task<WorkingHour> checkifExist(int EmployeeId, DayOfWeek day);
+        public  Task AddWorkingHours(WorkingHour d);
+        public Task UpdateWorkingHours(int id, WorkingHour s1);
+        public  Task<List<BarberSalon.Models.Appointment>> LoadAppointments();
+        public  Task<BarberSalon.Models.Appointment> LoadAppointmentById(int id);
+
+        public  Task UpdateAppointment(int id, AppointmentStatus status);
+        public  Task AddEmployee(BarberSalon.Models.Employee e);
+
+
+        public  Task<BarberSalon.Models.Employee> LoadEmployeeById(int id);
+        public  Task Diactive(int id);
+
+
+        public Task<List<BarberSalon.Models.Employee>> LoadActiveEmployee();
+        public Task<List<BarberSalon.Models.Service>> GetAllService();
+        public Task<BarberSalon.Models.Service> GetServiceById(int id);
+        public  Task DeleteService(int id);
+
+        public  Task AddService(BarberSalon.Models.Service s);
+
+        public  Task updateService(BarberSalon.Models.Service s);
+
+
+
+        public  Task<List<BarberSalon.Models.Order>> GetOrders();
 
 
 
 
+        public  Task updateOrder(int id, OrderStatus status);
 
 
     }

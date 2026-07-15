@@ -1,10 +1,12 @@
 using BarberSalon.Models.BindingModel;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Admin.Category
 {
+    [Authorize(Roles ="Admin")]
     public class CreateModel : PageModel
     {
         [BindProperty]

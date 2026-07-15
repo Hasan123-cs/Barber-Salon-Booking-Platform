@@ -1,0 +1,157 @@
+﻿@page
+@model BarberSalon.Pages.Admin.Employees.CreateModel
+@{
+    ViewData["Title"] = "Add Employee";
+    Layout = "AdminLayout";
+
+}
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-person-plus"></i>
+                Add Employee
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.FullName"></label>
+
+                        <input asp-for="Input.FullName" class="form-control"/>
+
+                        <span asp-validation-for="Input.FullName" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.Email"></label>
+
+                        <input asp-for="Input.Email" class="form-control"/>
+
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.Password"></label>
+
+                        <input asp-for="Input.Password"
+                               type="password"
+                               class="form-control"/>
+
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.Phone"></label>
+
+                        <input asp-for="Input.Phone"
+                               class="form-control"/>
+
+                        <span asp-validation-for="Input.Phone" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.Name"></label>
+
+                        <input asp-for="Input.Name"
+                               class="form-control"/>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.Specialization"></label>
+
+                        <input asp-for="Input.Specialization"
+                               class="form-control"/>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Input.ExperienceYears"></label>
+
+                        <input asp-for="Input.ExperienceYears"
+                               class="form-control"/>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label>Employee Image</label>
+
+                        <input asp-for="EmployeeImage"
+                               type="file"
+                               class="form-control"/>
+
+                    </div>
+
+                </div>
+
+                <div class="form-check mt-4">
+
+                    <input asp-for="Input.IsActive"
+                           class="form-check-input"/>
+
+                    <label asp-for="Input.IsActive"
+                           class="form-check-label">
+                        Active Employee
+                    </label>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <button class="btn btn-success">
+                        Create Employee
+                    </button>
+
+                    <a asp-page="Dashboard"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"/>
+}

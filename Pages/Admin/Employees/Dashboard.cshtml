@@ -1,0 +1,109 @@
+﻿@page
+@model BarberSalon.Pages.Admin.Employees.DashboardModel
+@{
+    Layout = "AdminLayout";
+
+    ViewData["Title"] = "Employee Management";
+}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>
+            <i class="bi bi-people-fill"></i>
+            Employee Management
+        </h2>
+
+        <a asp-page="Create" class="btn btn-success">
+            <i class="bi bi-person-plus-fill"></i>
+            Add Employee
+        </a>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Specialization</th>
+                        <th>Experience</th>
+                        <th>Status</th>
+                        <th width="220">Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                @foreach (var employee in Model.Employees)
+                {
+                    <tr>
+
+                        <td>
+
+                            <img src="@employee.ImageUrl"
+                                 width="70"
+                                 height="70"
+                                 class="rounded-circle border"
+                                 style="object-fit:cover;" />
+
+                        </td>
+
+                        <td>@employee.Name</td>
+
+                        <td>@employee.Phone</td>
+
+                        <td>@employee.Specialization</td>
+
+                        <td>@employee.ExperienceYears Years</td>
+
+                        <td>
+
+                            @if(employee.IsActive)
+                            {
+                                <span class="badge bg-success">
+                                    Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    Inactive
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+                            <a asp-page="Delete"
+                               asp-route-id="@employee.Id"
+                               class="btn btn-danger btn-sm">
+
+                                <i class="bi bi-trash"></i>
+
+                            </a>
+
+
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

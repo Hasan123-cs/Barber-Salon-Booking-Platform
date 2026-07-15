@@ -1,0 +1,148 @@
+﻿@page
+@model BarberSalon.Pages.Admin.Schedule.IndexModel
+@{
+    ViewData["Title"] = "Manage Schedule";
+    Layout = "AdminLayout";
+
+}
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-calendar-week"></i>
+                Manage Employee Schedule
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+
+            <form method="get">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row mb-4">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">Employee</label>
+
+                        <select asp-for="EmployeeId"
+                                class="form-select"
+                                onchange="this.form.submit()">
+
+                            <option value="">Select Employee</option>
+                            @foreach(var employee in Model.EmployeeList)
+                                    {
+                                        <option value="@employee.Id" >@employee.Name</option>
+                                    }
+                                </select>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+            @if (Model.EmployeeId != 0)
+            {
+
+                <form method="post">
+
+                    <input type="hidden" asp-for="EmployeeId"/>
+
+                    <table class="table table-bordered align-middle">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th style="width:18%">Day</th>
+
+                                <th style="width:22%">Start Time</th>
+
+                                <th style="width:22%">End Time</th>
+
+                                <th style="width:18%">Off Day</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @for (int i = 0; i < Model.Schedule.Count; i++)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        @Model.Schedule[i].Day
+
+                                        <input asp-for="Schedule[i].Day" type="hidden"/>
+
+                                        <input asp-for="Schedule[i].Id" type="hidden"/>
+
+                                    </td>
+
+                                    <td>
+
+                                        <input asp-for="Schedule[i].StartTime"
+                                               type="time"
+                                               class="form-control"/>
+
+                                    </td>
+
+                                    <td>
+
+                                        <input asp-for="Schedule[i].EndTime"
+                                               type="time"
+                                               class="form-control"/>
+
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <input asp-for="Schedule[i].IsOffDay"
+                                               class="form-check-input"/>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                    <button class="btn btn-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Save Schedule
+
+                    </button>
+
+                    <a asp-page="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}

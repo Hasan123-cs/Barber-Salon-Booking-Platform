@@ -8,7 +8,7 @@ namespace BarberSalon.Pages.Admin.Category
 {
     [Authorize(Roles = "Admin")]
 
-    public class EditModel : PageModel
+    public class EdittModel : PageModel
     {
         // create binding model because no need for new binding both share the common property needed
         [BindProperty]
@@ -16,13 +16,15 @@ namespace BarberSalon.Pages.Admin.Category
         public IAdminService admin;
         [BindProperty]
         public int id { get; set; }
-        public EditModel(IAdminService s)
+        public EdittModel(IAdminService s)
         {
             admin = s;
         }
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet(int ids )
         {
+            id = ids;
             var c = await admin.LoadCategoryById(id);
+            Console.WriteLine(id);
             if (c is null)
             {
                 return RedirectToPage("/Admin/Category/Index");

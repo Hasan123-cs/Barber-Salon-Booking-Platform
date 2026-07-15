@@ -1,4 +1,6 @@
-﻿    namespace BarberSalon.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace BarberSalon.Models
     {
     public class WorkingHour
     {
@@ -13,7 +15,7 @@
         public TimeOnly EndTime { get; set; }
 
         public bool IsOffDay { get; set; }
-
-        public Employee Employee { get; set; }
+        [ValidateNever]
+        public Employee? Employee { get; set; }
     }
 }

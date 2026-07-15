@@ -1,0 +1,73 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Admin.Employees.DeleteModel
+@{
+    Layout = "AdminLayout";
+
+}
+<div class="container py-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-danger text-white">
+            <h3>
+                <i class="bi bi-trash"></i>
+                Delete Employee
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="text-center mb-4">
+
+                <img src="@Model.Employee.ImageUrl"
+                     class="rounded-circle border"
+                     width="180"
+                     height="180"
+                     style="object-fit:cover;" />
+
+            </div>
+
+            <dl class="row">
+
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Employee.Name</dd>
+
+                <dt class="col-sm-3">Phone</dt>
+                <dd class="col-sm-9">@Model.Employee.Phone</dd>
+
+                <dt class="col-sm-3">Specialization</dt>
+                <dd class="col-sm-9">@Model.Employee.Specialization</dd>
+
+                <dt class="col-sm-3">Experience</dt>
+                <dd class="col-sm-9">@Model.Employee.ExperienceYears Years</dd>
+
+            </dl>
+
+            <div class="alert alert-warning">
+
+                <strong>Warning!</strong>
+
+                This employee will be deactivated and will no longer be able to log in.
+
+            </div>
+
+            <form method="post">
+
+                <input asp-for="Employee.Id" type="hidden"/>
+
+                <button class="btn btn-danger">
+                    Delete
+                </button>
+
+                <a asp-page="Dashboard"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

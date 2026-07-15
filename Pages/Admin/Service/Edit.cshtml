@@ -1,0 +1,145 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Admin.Service.EditModel
+@{
+    ViewData["Title"] = "Edit Service";
+    Layout = "AdminLayout";
+}
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-pencil-square"></i>
+                Edit Service
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+
+                <input asp-for="Service.Id" type="hidden" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @if (!string.IsNullOrEmpty(Model.Service.ImageUrl))
+                {
+                    <div class="text-center mb-4">
+
+                        <img src="@Model.Service.ImageUrl"
+                             class="rounded border"
+                             width="200"
+                             height="200"
+                             style="object-fit:cover;" />
+
+                    </div>
+                }
+
+                <div class="mb-3">
+
+                    <label class="form-label">Change Image</label>
+
+                    <input asp-for="ServiceImage"
+                           type="file"
+                           class="form-control" />
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Service.Name"></label>
+
+                    <input asp-for="Service.Name"
+                           class="form-control" />
+
+                    <span asp-validation-for="Service.Name"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Service.Description"></label>
+
+                    <textarea asp-for="Service.Description"
+                              class="form-control"
+                              rows="4"></textarea>
+
+                    <span asp-validation-for="Service.Description"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Service.Price"></label>
+
+                        <input asp-for="Service.Price"
+                               class="form-control" />
+
+                        <span asp-validation-for="Service.Price"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Service.Duration"></label>
+
+                        <input asp-for="Service.Duration"
+                               class="form-control" />
+
+                        <span asp-validation-for="Service.Duration"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="form-check mt-4">
+
+                    <input asp-for="Service.IsActive"
+                           class="form-check-input" />
+
+                    <label asp-for="Service.IsActive"
+                           class="form-check-label">
+                        Active Service
+                    </label>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        <i class="bi bi-check-circle"></i>
+                        Save Changes
+
+                    </button>
+
+                    <a asp-page="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,101 @@
+﻿@page
+@model BarberSalon.Pages.Admin.Appointments.IndexModel;
+@{
+    ViewData["Title"] = "Appointment Management";
+    Layout = "AdminLayout";
+
+}
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-calendar-check"></i>
+                Appointment Management
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Customer</th>
+                        <th>Employee</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Notes</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                @foreach (var appointment in Model.Appointments)
+                {
+                    <tr>
+
+                        <td>@appointment.User.FullName</td>
+
+                        <td>@appointment.Employee.Name</td>
+
+                        <td>@appointment.Service.Name</td>
+
+                        <td>@appointment.AppointmentDate.ToShortDateString()</td>
+
+                        <td>
+                            @appointment.StartTime -
+                            @appointment.EndTime
+                        </td>
+
+                        <td>@appointment.Notes</td>
+                            <form method="post">
+                        <td>
+
+
+
+                                <input type="hidden" name="AppointmentId" value="@appointment.Id"/>
+
+                                <select name="Status" class="form-select">
+
+                                    @foreach (var status in Enum.GetValues<BarberSalon.Models.Enum.AppointmentStatus>())
+                                    {
+                                        <option value="@status"
+                                                selected="@(status == appointment.Status)">
+                                            @status
+                                        </option>
+                                    }
+
+                                </select>
+
+                        </td>
+
+                        <td>
+
+                                <button class="btn btn-success btn-sm">
+                                    Update
+                                </button>
+
+                            
+
+                        </td>
+                        </form>
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

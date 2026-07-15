@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Barber Salon</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+    <style>
+            body {
+                background: #f8f9fa;
+            }
+
+            .navbar-brand {
+                font-weight: bold;
+            }
+
+            .nav-link {
+                font-weight: 500;
+                transition: .3s;
+            }
+
+                .nav-link:hover {
+                    color: #ffc107 !important;
+                }
+
+            main {
+                min-height: calc(100vh - 120px);
+            }
+
+            footer {
+                background: #212529;
+                color: white;
+                padding: 15px;
+                text-align: center;
+                margin-top: 40px;
+            }
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+
+        <div class="container">
+
+            <a class="navbar-brand" asp-page="/Admin/Dashboard/Index">
+                <i class="bi bi-scissors"></i>
+                Barber Admin
+            </a>
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar">
+
+                <span class="navbar-toggler-icon"></span>
+
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar">
+
+                <ul class="navbar-nav ms-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Employees/Dashboard">
+                            <i class="bi bi-speedometer2"></i>
+                            Employee
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Category/Index">
+                            <i class="bi bi-tags"></i>
+                            Categories
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Products/Index">
+                            <i class="bi bi-box-seam"></i>
+                            Products
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Service/Index">
+                            <i class="bi bi-stars"></i>
+                            Services
+                        </a>
+                    </li>
+
+                   
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Schedule/Index">
+                            <i class="bi bi-calendar-week"></i>
+                            Schedule
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Appointments/Index">
+                            <i class="bi bi-calendar-check"></i>
+                            Appointments
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           asp-page="/Admin/Orders/Index">
+                            <i class="bi bi-bag-check"></i>
+                            Orders
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <form method="post"
+                              asp-page="/Account/Logout">
+
+                            <button type="submit"
+                                    class="btn nav-link border-0 bg-transparent">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Logout
+                            </button>
+
+                        </form>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <main class="container py-4">
+
+        @RenderBody()
+
+    </main>
+
+    <footer>
+
+        &copy; @DateTime.Now.Year - Barber Salon Admin Panel
+
+    </footer>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

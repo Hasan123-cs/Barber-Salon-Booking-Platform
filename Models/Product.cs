@@ -1,4 +1,6 @@
-﻿namespace BarberSalon.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace BarberSalon.Models
 {
     public class Product
     {
@@ -15,9 +17,11 @@
         public string? ImageUrl { get; set; }
 
         public int CategoryId { get; set; }
-
-        public Category Category { get; set; }
+        [ValidateNever]
+        public Category? Category { get; set; } = new();
         public bool IsActive { get; set; }
+        [ValidateNever]
+
         public ICollection<OrderItem> OrderItems { get; set; }
             = new List<OrderItem>();
     }

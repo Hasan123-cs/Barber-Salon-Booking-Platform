@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Edit Product";
+    Layout = "AdminLayout";
+
 }
 
 <div class="container py-4">
@@ -36,13 +38,13 @@
 
                 <div class="mb-3">
                     <label asp-for="Product.Name"></label>
-                    <input asp-for="Product.Name" class="form-control"/>
+                    <input asp-for="Product.Name"  class="form-control" />
                     <span asp-validation-for="Product.Name" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Product.Description"></label>
-                    <textarea asp-for="Product.Description"
+                    <textarea asp-for="Product.Description" 
                               class="form-control"
                               rows="4"></textarea>
                     <span asp-validation-for="Product.Description" class="text-danger"></span>

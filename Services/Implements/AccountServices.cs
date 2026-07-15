@@ -18,11 +18,14 @@ namespace BarberSalon.Services.Implements
         }
         public async Task<int> LoginUser(LoginBindingModel l)
         {
-            var result = await _manager.PasswordSignInAsync(l.email, l.password,false,false);
-            if(result.Succeeded)
+            var result = await _manager.PasswordSignInAsync(l.email, l.password, false, false);
+            if (result.Succeeded)
             {
                 var user = await _manager.UserManager.FindByEmailAsync(l.email);
-
+                if(user is null)
+                {
+                    return -1;
+                }
                 if (await _manager.UserManager.IsInRoleAsync(user, "Admin"))
                 {
                     return 1;
@@ -36,7 +39,7 @@ namespace BarberSalon.Services.Implements
                 return 3;
             }
             return -1;
-           
+
         }
         public async Task<List<string>> RegisterUser(RegisterBindingViewModel b)
         {
@@ -44,18 +47,18 @@ namespace BarberSalon.Services.Implements
             {
                 UserName = b.Email,
                 Email = b.Email,
-                PhoneNumber=b.PhoneNumber,
-                FullName=b.FullName,
+                PhoneNumber = b.PhoneNumber,
+                FullName = b.FullName,
 
             };
             var result = await _usermanager.CreateAsync(user, b.Password);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 return [];
             }
-            return result.Errors.Where(r => r.Code!="DuplicateUserName").Select(x => x.Description).ToList(); 
+            return result.Errors.Where(r => r.Code != "DuplicateUserName").Select(x => x.Description).ToList();
         }
-        public  async Task SeedRoles(IServiceProvider serviceProvider)
+        public async Task SeedRoles(IServiceProvider serviceProvider)
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -66,6 +69,27 @@ namespace BarberSalon.Services.Implements
                 if (!await roleManager.RoleExistsAsync(role))
                 {
                     await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+            string email = "admin@Barber.com";
+
+            var admin = await _usermanager.FindByEmailAsync(email);
+
+            if (admin == null)
+            {
+                admin = new ApplicationUser
+                {
+                    FullName = "System Admin",
+                    UserName = email,
+                    Email = email,
+                    EmailConfirmed = true
+                };
+
+                var result = await _usermanager.CreateAsync(admin, "test123");
+
+                if (result.Succeeded)
+                {
+                    await _usermanager.AddToRoleAsync(admin, "Admin");
                 }
             }
         }

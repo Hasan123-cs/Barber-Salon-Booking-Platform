@@ -10,7 +10,7 @@ namespace BarberSalon.Pages.Admin.Category
     public class IndexModel : PageModel
     {
         public IAdminService admin;
-        public List<BarberSalon.Models.Category> Categories { get; set; }
+        public List<BarberSalon.Models.Category> Categories { get; set; } = new();
         public IndexModel(IAdminService admin)
         {
             this.admin = admin;
@@ -23,7 +23,7 @@ namespace BarberSalon.Pages.Admin.Category
         public async Task<IActionResult> OnPostToggleStatusAsync(int id)
         {
             await admin.ToogleStatus(id);
-            return Page();
+            return RedirectToPage();
 
         }
     }
