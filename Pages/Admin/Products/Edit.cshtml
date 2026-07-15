@@ -1,0 +1,129 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Admin.Products.EditModel
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container py-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3>Edit Product</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post" enctype="multipart/form-data">
+
+                <input type="hidden" asp-for="Product.Id"/>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="text-center mb-4">
+
+                    <img src="@Model.Product.ImageUrl"
+                         width="220"
+                         class="img-thumbnail"/>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductImage" class="form-label"></label>
+                    <input asp-for="ProductImage" class="form-control"/>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Product.Name"></label>
+                    <input asp-for="Product.Name" class="form-control"/>
+                    <span asp-validation-for="Product.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Product.Description"></label>
+                    <textarea asp-for="Product.Description"
+                              class="form-control"
+                              rows="4"></textarea>
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Product.Price"></label>
+
+                        <input asp-for="Product.Price"
+                               class="form-control"/>
+
+                        <span asp-validation-for="Product.Price"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Product.StockStatus"></label>
+
+                        <input asp-for="Product.StockStatus"
+                               class="form-control"/>
+
+                        <span asp-validation-for="Product.StockStatus"
+                              class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-3">
+
+                    <label>Category</label>
+
+                    <select asp-for="Product.CategoryId"
+                            class="form-select">
+                            @foreach(var x in Model.CategoryList)
+                                {
+                                    <option value="@x.Id">@x.Name</option>
+                                }
+                            </select>
+
+                </div>
+
+                <div class="form-check mt-3">
+
+                    <input asp-for="Product.IsActive"
+                           class="form-check-input"/>
+
+                    <label asp-for="Product.IsActive"
+                           class="form-check-label">
+                    </label>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <button class="btn btn-success">
+                        Save Changes
+                    </button>
+
+                    <a asp-page="Index"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <partial name="_ValidationScriptsPartial"/>
+
+}

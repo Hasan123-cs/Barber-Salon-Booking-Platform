@@ -1,5 +1,6 @@
 using BarberSalon.Data;
 using BarberSalon.Models;
+using BarberSalon.Services;
 using BarberSalon.Services.Implements;
 using BarberSalon.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +34,7 @@ builder.Services
 
     })
     .AddEntityFrameworkStores<AppDbContext>();
+builder.Services.AddScoped<SupabaseService>();
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // login for the non authenticated user return also if access denied happen (user enter the admin dashboard)'
