@@ -6,15 +6,17 @@ using BarberSalon.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 namespace BarberSalon.Services.Implements
 {
     public class EmployeeServices : IEmployeeServices
     {
         public AppDbContext _db;
         public UserManager<ApplicationUser> _userManager;
-        public async Task<List<EmployeeService>> GetAllEmployee(int serviceID) { 
-            var result = await _db.EmployeeServices.Where(x=>x.ServiceId == serviceID).Include(x => x.Employee).ToListAsync();
-            return result; 
+        public async Task<List<EmployeeService>> GetAllEmployee(int serviceID)
+        {
+            var result = await _db.EmployeeServices.Where(x => x.ServiceId == serviceID).Include(x => x.Employee).ToListAsync();
+            return result;
         }
 
         public EmployeeServices(AppDbContext _db, UserManager<ApplicationUser> userManager)
@@ -30,9 +32,9 @@ namespace BarberSalon.Services.Implements
         }
         public async Task<List<BarberSalon.Models.Category>> GetCategorys()
         {
-           var  Categories = await _db.Categories
-             .Where(c => c.IsActive)
-             .ToListAsync();
+            var Categories = await _db.Categories
+              .Where(c => c.IsActive)
+              .ToListAsync();
             return Categories;
         }
         public async Task<EmployeeDashboardVM> GetDashboard(ClaimsPrincipal principal)
@@ -89,6 +91,33 @@ namespace BarberSalon.Services.Implements
                 .OrderBy(x => x.AppointmentDate)
                 .ThenBy(x => x.StartTime)
                 .ToListAsync();
+
+
         }
+        //  appointment schedule
+        public async Task<BarberSalon.Models.Appointment> GetAppointmentById(int id , string userId)
+        {
+
+           return await _db.Appointments
+                .Include(a => a.User)
+                .Include(a => a.Service)
+                .Include(a => a.Employee)
+                .FirstOrDefaultAsync(a =>a.Id == id &&a.Employee.UserId == userId);
+        }
+        public async Task UpdateStatusOfAppointmentEmployee(int id , string userId,AppointmentStatus status)
+        {
+            var appointment = await _db.Appointments.Include(a => a.Employee).FirstOrDefaultAsync(a =>a.Id == id && a.Employee.UserId == userId);
+            if (appointment == null)
+            {
+                return ;
+            }
+            appointment.Status = status;
+            await _db.SaveChangesAsync();
+        }
+        public async Task<string> getUserId(int eid)
+        {
+            return await _db.Employees.Where(x => x.Id == eid).Select(x=>x.UserId).FirstAsync();
+        }
+
     }
 }

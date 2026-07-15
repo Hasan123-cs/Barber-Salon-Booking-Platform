@@ -1,0 +1,100 @@
+﻿@page
+@model BarberSalon.Pages.Employee.Schedules.IndexModel
+@{
+    ViewData["Title"] = "My Schedule";
+    if (User.IsInRole("Customer"))
+    {
+        Layout = "HomeLayout";
+    }
+    else if (User.IsInRole("Employee"))
+    {
+        Layout = "EmployeeLayout";
+    }
+}
+
+<div class="container py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            <i class="bi bi-calendar-week text-warning"></i>
+            My Schedule
+        </h2>
+
+        <p class="text-muted">
+            Your weekly working hours assigned by the administrator.
+        </p>
+    </div>
+
+    @if (Model.WorkingHours.Any())
+    {
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body">
+
+                <table class="table align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>Day</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    @foreach (var item in Model.WorkingHours)
+                    {
+                        <tr>
+
+                            <td>@item.Day</td>
+
+                            <td>
+                                @(item.IsOffDay ? "-" : item.StartTime.ToString("HH:mm"))
+                            </td>
+
+                            <td>
+                                @(item.IsOffDay ? "-" : item.EndTime.ToString("HH:mm"))
+                            </td>
+
+                            <td>
+
+                                @if (item.IsOffDay)
+                                {
+                                    <span class="badge bg-danger">
+                                        Off Day
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        Working
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Your schedule has not been assigned yet.
+        </div>
+    }
+
+</div>

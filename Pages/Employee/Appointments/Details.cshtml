@@ -1,0 +1,127 @@
+﻿@page "{id:int}"
+@model BarberSalon.Pages.Employee.Appointments.DetailsModel
+@{
+    ViewData["Title"] = "Update Appointment";
+    Layout = "EmployeeLayout";
+}
+@using BarberSalon.Models.Enum
+<div class="container py-4">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            <i class="bi bi-pencil-square text-warning"></i>
+            Update Appointment
+        </h2>
+
+        <p class="text-muted">
+            Review the appointment details and update its status.
+        </p>
+    </div>
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-body p-4">
+
+            <form method="post">
+
+                <input type="hidden" asp-for="Appointment.Id" />
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Customer
+                        </label>
+
+                        <input class="form-control"
+                               value="@Model.Appointment.User.FullName"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Service
+                        </label>
+
+                        <input class="form-control"
+                               value="@Model.Appointment.Service.Name"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Date
+                        </label>
+
+                        <input class="form-control"
+                               value="@Model.Appointment.AppointmentDate.ToString("dd MMM yyyy")"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Time
+                        </label>
+
+                        <input class="form-control"
+                               value="@($"{Model.Appointment.StartTime} - {Model.Appointment.EndTime}")"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <label class="form-label fw-semibold">
+                            Notes
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="3"
+                                  readonly>@Model.Appointment.Notes</textarea>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="Appointment.Status"
+                               class="form-label fw-semibold">
+                        </label>
+                        <!-- get the enum list here  -->
+                        <select asp-for="Appointment.Status"
+                        
+                                asp-items="Html.GetEnumSelectList<AppointmentStatus>()"
+                                class="form-select">
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+
+                    <button class="btn btn-warning">
+                        <i class="bi bi-check-circle"></i>
+                        Save Changes
+                    </button>
+
+                    <a asp-page="/Employee/Index"
+                       class="btn btn-secondary">
+                        Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

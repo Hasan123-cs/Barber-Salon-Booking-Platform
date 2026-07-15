@@ -12,7 +12,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
 builder.Services.AddScoped<IEmployeeServices, EmployeeServices>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
-
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
     ));
@@ -50,7 +50,13 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromHours(2);
 });
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var serv = scope.ServiceProvider.GetRequiredService<IAccountServices>();
 
+    await serv.SeedRoles(services);
+}
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

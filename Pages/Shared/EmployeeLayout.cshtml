@@ -103,7 +103,7 @@
                     <li class="nav-item">
 
                         <a class="nav-link"
-                           asp-page="/Employee/Schedule/Index">
+                           asp-page="/Employee/Schedules/Index">
 
                             <i class="bi bi-clock-history"></i>
                             My Schedule
@@ -112,22 +112,11 @@
 
                     </li>
 
-                    <li class="nav-item">
-
-                        <a class="nav-link"
-                           asp-page="/Employee/Profile/Index">
-
-                            <i class="bi bi-person-circle"></i>
-                            My Profile
-
-                        </a>
-
-                    </li>
+                    
 
                 </ul>
 
-                <form method="post"
-                      asp-page="/Account/Logout">
+                <form method="post" asp-page="/Account/Logout">
 
                     <button class="btn btn-outline-warning">
 
@@ -153,22 +142,24 @@
     </main>
 
     <!-- Footer -->
+    <!-- Avoid the Footer in  My Appointments -->
+    @if (!(ViewData["HideFooter"] as bool? ?? false))
+        {
+            <footer class="py-3 mt-5">
 
-    <footer class="py-3 mt-5">
+                <div class="container text-center">
 
-        <div class="container text-center">
+                    <small>
 
-            <small>
+                        © @DateTime.Now.Year Barber Salon Employee Panel
 
-                © @DateTime.Now.Year Barber Salon Employee Panel
+                    </small>
 
-            </small>
+                </div>
 
-        </div>
-
-    </footer>
-
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            </footer>
+        }
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 

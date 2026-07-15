@@ -55,5 +55,19 @@ namespace BarberSalon.Services.Implements
             }
             return result.Errors.Where(r => r.Code!="DuplicateUserName").Select(x => x.Description).ToList(); 
         }
+        public  async Task SeedRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string[] roles = { "Admin", "Employee", "Customer" };
+
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+        }
     }
 }

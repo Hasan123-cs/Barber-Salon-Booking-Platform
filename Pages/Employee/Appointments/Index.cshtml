@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "My Appointments";
     Layout = "EmployeeLayout";
+    ViewData["HideFooter"] = true;
 }
 
 <style>
@@ -104,6 +105,10 @@
                                             <span class="badge bg-success px-3 py-2">
                                                 Completed
                                             </span>
+                                        }
+                                        else if (item.Status == BarberSalon.Models.Enum.AppointmentStatus.Confirmed)
+                                        {
+                                            <span class="badge bg-primary">Confirmed</span>
                                         }
                                         else
                                         {

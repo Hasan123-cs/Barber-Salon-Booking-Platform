@@ -6,5 +6,7 @@ namespace BarberSalon.Services.Interfaces
     {
         public Task<int> LoginUser(LoginBindingModel l);
         public Task<List<string>> RegisterUser(RegisterBindingViewModel b);
+        public   Task SeedRoles(IServiceProvider serviceProvider);
+        
     }
 }

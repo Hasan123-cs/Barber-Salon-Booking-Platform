@@ -84,168 +84,45 @@ Shop Products
 
 <!-- SERVICES -->
 
-<div class="container mt-5">
-
-<h2 class="section-title text-center">
-Popular Services
-</h2>
-
-<div class="row g-4">
-
-<div class="col-md-4">
-
-<div class="card service-card">
-
-<img src="/images/haircut.jpg" class="card-img-top">
-
-<div class="card-body">
-
-<h4>Hair Cut</h4>
-
-<p>
-Professional haircut by experienced barber.
-</p>
-
-<div class="d-flex justify-content-between">
-
-<span class="fw-bold text-danger">
-$15
-</span>
-
-<span>
-30 Minutes
-</span>
-
-</div>
-
-<a class="btn btn-pink w-100 mt-3">
-Book Now
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card service-card">
-
-<img src="/images/beard.jpg" class="card-img-top">
-
-<div class="card-body">
-
-<h4>Beard Trim</h4>
-
-<p>
-Clean and stylish beard trimming.
-</p>
-
-<div class="d-flex justify-content-between">
-
-<span class="fw-bold text-danger">
-$10
-</span>
-
-<span>
-20 Minutes
-</span>
-
-</div>
-
-<a class="btn btn-pink w-100 mt-3">
-Book Now
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-
-<div class="card service-card">
-
-<img src="/images/color.jpg" class="card-img-top">
-
-<div class="card-body">
-
-<h4>Hair Coloring</h4>
-
-<p>
-Premium coloring with high quality products.
-</p>
-
-<div class="d-flex justify-content-between">
-
-<span class="fw-bold text-danger">
-$40
-</span>
-
-<span>
-90 Minutes
-</span>
-
-</div>
-
-<a class="btn btn-pink w-100 mt-3">
-Book Now
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 <!-- EMPLOYEES -->
-
 <div class="container mt-5">
 
-<h2 class="section-title text-center">
-Meet Our Professionals
-</h2>
-@foreach(var staff in Model.bestEmployee )
-    {
+    <h2 class="section-title text-center mb-4">
+        Meet Our Professionals
+    </h2>
 
-<div class="col-md-4">
+    <div class="row g-4">
 
-<div class="card employee-card text-center">
+        @foreach (var staff in Model.bestEmployee)
+        {
+            <div class="col-md-4">
 
-<img src="/images/@staff.ImageUrl" class="card-img-top">
+                <div class="card employee-card text-center h-100">
 
-<div class="card-body">
+                    <img src="/images/@staff.ImageUrl" class="card-img-top" alt="@staff.Name">
 
-<h4>@staff.Name</h4>
+                    <div class="card-body">
 
-<p class="text-muted">
-@staff.Specialization
-</p>
+                        <h4>@staff.Name</h4>
 
-<p>
+                        <p class="text-muted">
+                            @staff.Specialization
+                        </p>
 
-@staff.ExperienceYears Years Experience
+                        <p>
+                            @staff.ExperienceYears Years Experience
+                        </p>
 
-</p>
+                      
 
-<a class="btn btn-outline-pink">
-View Schedule
-</a>
+                    </div>
 
-</div>
+                </div>
 
-</div>
+            </div>
+        }
 
-</div>
-        
-    }
-
+    </div>
 
 </div>
     
