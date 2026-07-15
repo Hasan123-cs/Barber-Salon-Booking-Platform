@@ -19,7 +19,7 @@ namespace BarberSalon.Services.Implements
 
         public async Task<List<Service>> GetAllServices()
         {
-            return await _db.Services.ToListAsync();
+            return await _db.Services.Where(x=>x.IsActive).ToListAsync();
         }
         public async Task<BarberSalon.Models.Service> LoadServiceById(int id)
         {

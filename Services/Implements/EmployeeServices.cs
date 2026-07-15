@@ -41,10 +41,15 @@ namespace BarberSalon.Services.Implements
         {
             var user = await _userManager.GetUserAsync(principal);
 
+            if(user is null)
+            {
+                return new EmployeeDashboardVM();
+            }
             var employee = await _db.Employees.FirstOrDefaultAsync(x => x.UserId == user.Id);
 
             if (employee == null)
             {
+                Console.WriteLine("null");
                 return new EmployeeDashboardVM();
             }
 

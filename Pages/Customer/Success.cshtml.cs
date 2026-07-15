@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Customer
 {
+
     public class SuccessModel : PageModel
     {
         // to get it from the route parameter 

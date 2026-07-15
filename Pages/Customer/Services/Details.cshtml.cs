@@ -1,10 +1,12 @@
 using BarberSalon.Models;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Customer.Services
 {
+
     public class DetailsModel : PageModel
     {
         public BarberSalon.Models.Service Service { get; set; }

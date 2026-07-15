@@ -1,10 +1,13 @@
 using BarberSalon.Models;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Home
 {
+    [Authorize(Roles = "Customer")]
+
     public class IndexModel : PageModel
     {
         public IEmployeeServices _service { get; set; }

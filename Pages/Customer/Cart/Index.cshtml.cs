@@ -1,5 +1,6 @@
 using BarberSalon.Data;
 using BarberSalon.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Win32;
@@ -7,6 +8,7 @@ using System.Text.Json;
 
 namespace BarberSalon.Pages.Customer.Cart
 {
+
     public class IndexModel : PageModel
     {
         public List<CartItem> CartItems { get; set; } = new();

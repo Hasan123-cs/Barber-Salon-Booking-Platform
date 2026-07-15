@@ -1,11 +1,13 @@
 using BarberSalon.Models;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Customer.Order
 {
+
     public class OrderDetailsModel : PageModel
     {
         public ICustomerService cust;

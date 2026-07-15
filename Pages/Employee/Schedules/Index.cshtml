@@ -2,14 +2,10 @@
 @model BarberSalon.Pages.Employee.Schedules.IndexModel
 @{
     ViewData["Title"] = "My Schedule";
-    if (User.IsInRole("Customer"))
-    {
-        Layout = "HomeLayout";
-    }
-    else if (User.IsInRole("Employee"))
-    {
-        Layout = "EmployeeLayout";
-    }
+
+    Layout = "EmployeeLayout";
+    ViewData["HideFooter"]=true;
+
 }
 
 <div class="container py-4">

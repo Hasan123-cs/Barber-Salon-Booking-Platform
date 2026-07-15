@@ -10,14 +10,15 @@ namespace BarberSalon.Pages.Admin.Products
     public class CreateModel : PageModel
     {
         [BindProperty]
-        public BarberSalon.Models.Product Product { get; set; }
+        public BarberSalon.Models.Product Product { get; set; } = new();
         [BindProperty]
         public IFormFile ImageFile { get; set; }
         private readonly SupabaseService _supabase;
         public List<BarberSalon.Models.Category> Categories { get; set; }
         public IAdminService admin { get; set; }
-        public CreateModel(IAdminService s)
+        public CreateModel(IAdminService s, SupabaseService z)
         {
+            _supabase = z;
             admin = s;
         }
         public async Task OnGet()
@@ -27,7 +28,8 @@ namespace BarberSalon.Pages.Admin.Products
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            
+            Console.WriteLine(Product.Name);
+            Console.WriteLine(Product.CategoryId);
             Categories = await admin.GetallCategoryActive();
             if (!ModelState.IsValid)
             {

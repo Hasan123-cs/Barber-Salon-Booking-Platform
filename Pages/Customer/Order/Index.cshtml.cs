@@ -1,10 +1,12 @@
 using BarberSalon.Services.Implements;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Customer.Order
 {
+
     public class IndexModel : PageModel
     {
         [BindProperty]

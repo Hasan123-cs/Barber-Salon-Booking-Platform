@@ -24,7 +24,6 @@
 
                 <div class="card-body">
 
-                    <!-- Service Information -->
 
                     <div class="border rounded p-3 mb-4">
 
@@ -59,8 +58,7 @@
                     <form method="post">
 
                         <input asp-for="Appointment.ServiceId" type="hidden" />
-
-                        <!-- Barber choising  -->
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                         <div class="mb-3">
 
@@ -89,7 +87,6 @@
 
                         </div>
 
-                        <!-- Date -->
 
                         <div class="mb-3">
 
@@ -107,7 +104,6 @@
 
                         </div>
 
-                        <!-- Load the Time  -->
                         <button type="submit"
                                 asp-page-handler="LoadTimes"
                                 class="btn btn-outline-warning mb-4">
@@ -116,7 +112,6 @@
 
                         </button>
 
-                        <!-- Available Times we Have  -->
 
                         <div class="mb-3">
 
@@ -145,7 +140,6 @@
 
                         </div>
 
-                        <!-- Notes if have  -->
 
                         <div class="mb-4">
 

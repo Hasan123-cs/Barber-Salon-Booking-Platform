@@ -18,7 +18,7 @@ namespace BarberSalon.Models
 
         public int CategoryId { get; set; }
         [ValidateNever]
-        public Category? Category { get; set; } = new();
+        public Category? Category { get; set; }
         public bool IsActive { get; set; }
         [ValidateNever]
 

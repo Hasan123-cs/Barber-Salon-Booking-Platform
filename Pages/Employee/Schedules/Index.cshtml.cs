@@ -2,6 +2,7 @@ using BarberSalon.Models;
 using BarberSalon.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BarberSalon.Pages.Employee.Schedules;
@@ -19,10 +20,19 @@ public class IndexModel : PageModel
 
     public List<WorkingHour> WorkingHours { get; set; } = new();
 
-    public async Task OnGetAsync()
+    public async Task<IActionResult> OnGetAsync()
     {
-            var user = await _userManager.GetUserAsync(User);
+        var user = await _userManager.GetUserAsync(User);
 
-            WorkingHours = await _service.GetEmployeeSchedule(user.Id);
+        if (user is null)
+        {
+            return NotFound("error");
+        }
+
+        
+        WorkingHours = await _service.GetEmployeeSchedule(user.Id);
+
+       
+        return Page();
     }
 }

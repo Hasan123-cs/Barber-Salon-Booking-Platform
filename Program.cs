@@ -41,7 +41,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     // httponly use for secure from xss attack from java script by reading the cookie 
 
     options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
+    options.Cookie.MaxAge = null;
+    options.AccessDeniedPath = "/Account/Login";
     options.Cookie.HttpOnly = true;
 });
 // configure session

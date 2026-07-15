@@ -28,6 +28,7 @@ namespace BarberSalon.Pages.Employee.Dashboard
 
         public async Task OnGet()
         {
+
             var dashboard = await _employeeService.GetDashboard(User);
 
             TodayCount = dashboard.TodayCount;

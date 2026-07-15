@@ -1,3 +1,4 @@
+using BarberSalon.Data;
 using BarberSalon.Models;
 using BarberSalon.Models.BindingModel;
 using BarberSalon.Services;
@@ -13,23 +14,27 @@ namespace BarberSalon.Pages.Admin.Employees
     {
         [BindProperty]
         public CreateEmployeeBindingModel Input { get; set; } = new();
+        public List<BarberSalon.Models.Service> Services { get; set; } = new();
 
         [BindProperty]
         public IFormFile? EmployeeImage { get; set; }
         public  UserManager<ApplicationUser> _userManager;
         public  SupabaseService _storageService;
         public IAdminService admin;
-        public CreateModel( UserManager<ApplicationUser> userManager, SupabaseService storageService, IAdminService s)
+        public AppDbContext _db;
+        public CreateModel( UserManager<ApplicationUser> userManager, SupabaseService storageService, IAdminService s,AppDbContext sx)
         {
             admin = s;
             _userManager = userManager;
             _storageService = storageService;
+            _db = sx;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            Services = await _db.Services.Where(x => x.IsActive).ToListAsync();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(List<int> SelectedServices)
         {
             if (!ModelState.IsValid)
                 return Page();
@@ -84,7 +89,18 @@ namespace BarberSalon.Pages.Admin.Employees
                 IsActive = Input.IsActive
             };
             await admin.AddEmployee(employee);
+            foreach (var serviceId in SelectedServices)
+            {
+                var employeeService = new EmployeeService
+                {
+                    EmployeeId = employee.Id,
+                    ServiceId = serviceId
+                };
 
+                await _db.EmployeeServices.AddAsync(employeeService);
+            }
+
+            await _db.SaveChangesAsync();
 
             return RedirectToPage("Dashboard");
         }

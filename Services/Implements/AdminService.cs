@@ -17,7 +17,39 @@ namespace BarberSalon.Services.Implements
 
         public async Task<List<WorkingHour>> GetEmployeeSchedule(string employeeId)
         {
-            return await _db.WorkingHours.Include(w => w.Employee).Where(w => w.Employee.UserId == employeeId).OrderBy(w => w.Day).ToListAsync();
+            Console.WriteLine("Searching employee: " + employeeId);
+
+            var employee = await _db.Employees
+                .FirstOrDefaultAsync(e => e.UserId == employeeId);
+
+            if (employee == null)
+            {
+                Console.WriteLine("NO EMPLOYEE FOUND");
+                return new List<WorkingHour>();
+            }
+
+            Console.WriteLine("Employee Id: " + employee.Id);
+
+
+            var allHours = await _db.WorkingHours.ToListAsync();
+
+            foreach (var h in allHours)
+            {
+                Console.WriteLine(
+                    $"WH Id:{h.Id} EmployeeId:{h.EmployeeId} Day:{h.Day}"
+                );
+            }
+
+
+            var data = await _db.WorkingHours
+                .Where(w => w.EmployeeId == employee.Id)
+                .OrderBy(w => w.Day)
+                .ToListAsync();
+
+
+            Console.WriteLine("Hours found: " + data.Count);
+
+            return data;
         }
         public async Task<string> GetEmployeeName(string employeeId)
         {
@@ -91,7 +123,7 @@ namespace BarberSalon.Services.Implements
         }
         public async Task<List<BarberSalon.Models.Category>> GetallCategoryActive()
         {
-            return await _db.Categories.Where(x=>x.IsActive==true).ToListAsync();
+            return await _db.Categories.Include(r=>r.Products).Where(x=>x.IsActive==true).ToListAsync();
         }
         public async Task AddProduct(BarberSalon.Models.Product s)
         {

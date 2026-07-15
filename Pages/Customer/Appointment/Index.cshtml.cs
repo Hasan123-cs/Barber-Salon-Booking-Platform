@@ -2,6 +2,7 @@ using BarberSalon.Models;
 using BarberSalon.Models.Enum;
 using BarberSalon.Services.Implements;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

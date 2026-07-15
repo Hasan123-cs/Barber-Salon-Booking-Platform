@@ -26,6 +26,22 @@ namespace BarberSalon.Pages.Admin.Schedule
                 return Page();
             }
             Schedule = await admin.LoadSchedule(EmployeeId);
+            if (Schedule.Count == 0)
+            {
+                foreach (DayOfWeek day in Enum.GetValues<DayOfWeek>())
+                {
+                    Schedule.Add(new Models.WorkingHour
+                    {
+                        EmployeeId = EmployeeId,
+                        Day = day,
+                        StartTime = new TimeOnly(9, 0),
+                        EndTime = new TimeOnly(17, 0),
+                        IsOffDay = false
+                    });
+                }
+            }
+
+            Schedule.OrderBy(x => x.Day).ToList();
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
