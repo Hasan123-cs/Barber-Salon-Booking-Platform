@@ -112,9 +112,15 @@ namespace BarberSalon.Services.Implements
         public async Task UpdateStatusOfAppointmentEmployee(int id , string userId,AppointmentStatus status)
         {
             var appointment = await _db.Appointments.Include(a => a.Employee).FirstOrDefaultAsync(a =>a.Id == id && a.Employee.UserId == userId);
+            
             if (appointment == null)
             {
                 return ;
+            }
+            // to ensure the employee cannot change the status if it complet or cancel
+            if (appointment.Status == AppointmentStatus.Completed || appointment.Status == AppointmentStatus.Cancelled)
+            {
+                return;
             }
             appointment.Status = status;
             await _db.SaveChangesAsync();

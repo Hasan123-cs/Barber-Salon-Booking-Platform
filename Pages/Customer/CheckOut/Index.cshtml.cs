@@ -51,7 +51,7 @@ namespace BarberSalon.Pages.Customer.CheckOut
             }
             else
             {
-
+                // can add midlweare for error with status code for each page for Better UX w
             return BadRequest("Cannot Make the order");
             }
 

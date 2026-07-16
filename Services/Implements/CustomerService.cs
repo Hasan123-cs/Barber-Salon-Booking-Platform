@@ -3,6 +3,7 @@ using BarberSalon.Models;
 using BarberSalon.Models.Enum;
 using BarberSalon.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Text.Json;
 
 namespace BarberSalon.Services.Implements
@@ -53,9 +54,7 @@ namespace BarberSalon.Services.Implements
                 //current = current.AddMinutes(service.Duration);
                 var end = current.AddMinutes(service.Duration);
 
-                bool occupied = appointments.Any(a =>
-                 current < a.EndTime &&
-                 end > a.StartTime);
+                bool occupied = appointments.Any(a =>current < a.EndTime && end > a.StartTime);
                 if (!occupied)
                 {
                     available.Add(current.ToString("HH:mm"));
@@ -68,8 +67,19 @@ namespace BarberSalon.Services.Implements
         public async Task BookAppointment(BarberSalon.Models.Appointment app)
         {
 
-            app.AppointmentDate =
-DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
+            app.AppointmentDate =DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
+            // for no overlap check if 2 customer receve for example 1 from 10 - 11:30 and one 10-30 12 
+            // avoid this problem 
+            bool exists = await _db.Appointments.AnyAsync(a =>
+            a.EmployeeId == app.EmployeeId &&
+            a.AppointmentDate.Date == app.AppointmentDate.Date &&
+            app.StartTime < a.EndTime &&
+            app.EndTime > a.StartTime);
+
+            if (exists)
+            {
+                return;
+            }
             app.Status = Models.Enum.AppointmentStatus.Pending;
             await _db.Appointments.AddAsync(app);
 
@@ -78,7 +88,7 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
         }
         public async Task<List<Models.Product>> GetProductsByCategoryId(int id)
         {
-            return await _db.Products.Where(x => x.CategoryId == id).ToListAsync();
+            return await _db.Products.Include(r=>r.Category).Where(x => x.CategoryId == id).ToListAsync();
         }
         public async Task<BarberSalon.Models.Category> GetCategoryById(int id)
         {
@@ -113,7 +123,10 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
 
             // Check if exist 
             var item = cart.FirstOrDefault(x => x.ProductId == Product.Id);
-
+            if (qty <= 0)
+            {
+                qty = 1;
+            }
             if (item == null)
             {
                 cart.Add(new CartItem
@@ -128,6 +141,11 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
             else
             {
                 item.Quantity += qty;
+                // this simulate for the cart cannot exceed the quantity in stock 
+                if (item.Quantity > Product.StockStatus)
+                {
+                    item.Quantity = Product.StockStatus;
+                }
             }
             _httpContextAccessor.HttpContext!.Session.SetString("Cart", JsonSerializer.Serialize(cart));
 
@@ -135,8 +153,15 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
 
         public async Task<bool> MakeTheOrder(ApplicationUser user, List<CartItem> cart, string paymentMethod)
         {
+            // for access in catch added here 
+            IDbContextTransaction? transaction = null;
             try
             {
+                // why i add it ? imagine power off at last task for example payment the order is 
+                // added to db and save but the client isnt pay so transaction help in this field by 
+                // do a roolback if any error occur inside this chunck
+                transaction = await _db.Database.BeginTransactionAsync();
+
                 // use try catch here for debuging 
                 Order order = new Order
                 {
@@ -163,10 +188,19 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
 
                     };
                     var product = await _db.Products.FindAsync(item.ProductId);
-                    if(product != null)
+                    if (product == null)
                     {
-                        product.StockStatus -= item.Quantity;
+                        await transaction.RollbackAsync();
+                        return false;
                     }
+
+                    if (product.StockStatus < item.Quantity)
+                    {
+                        await transaction.RollbackAsync();
+                        return false;
+                    }
+
+                    product.StockStatus -= item.Quantity;
 
 
                     order.OrderItems.Add(orderItem);
@@ -191,20 +225,21 @@ DateTime.SpecifyKind(app.AppointmentDate, DateTimeKind.Utc);
                 _db.Orders.Add(order);
 
                 await _db.SaveChangesAsync();
-
+                await transaction.CommitAsync();
                 return true;
             }
             catch (Exception ex)
             {
 
+                await transaction.RollbackAsync();
                 Console.WriteLine(ex.Message);
-
                 return false;
 
             }
 
         }
-        // Load Appointment  by id here 
+        // Load
+        // by id here 
         public async Task<List<BarberSalon.Models.Appointment>> GetAppointmentById(string id)
         {
             return await _db.Appointments

@@ -62,7 +62,8 @@ namespace BarberSalon.Pages.Customer.Appointment
 
             EmployeeList = await _service.GetAllEmployee(Appointment.ServiceId);
             AvailableTimes = await _custService.GetAvailableTimes(Appointment.EmployeeId, Appointment.ServiceId, SelectedDate);
-            // this fix the problem when 2 user select simultanusly 
+            
+            // fix problem of receive the same time from many side (customer ) 
             if (!AvailableTimes.Contains(SelectedTime))
             {
                 ModelState.AddModelError("", "This time is no longer available");

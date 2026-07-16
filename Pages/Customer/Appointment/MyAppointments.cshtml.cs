@@ -34,6 +34,7 @@ namespace BarberSalon.Pages.Customer.Appointment
             {
                 return RedirectToPage("/Account/Login");
             }
+
             await _custServ.CancelAppointment(id, user.Id);
             return RedirectToPage();
         }
