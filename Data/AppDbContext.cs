@@ -153,7 +153,6 @@ namespace BarberSalon.Data
             a.StartTime
         })
 // here the key for no race conditions add the is unique constraint (mention in exam ) 
-// here its mean the customer 1 cannot receve 2 time at the same (Date) 
         .IsUnique();
 
             // so many time search for employee by name 
