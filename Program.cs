@@ -74,6 +74,14 @@ builder.Services.AddSession(options =>
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
+
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    // do migration for docker when run 
+    Console.WriteLine("START MIGRATION");
+
+    db.Database.Migrate();
+
+    Console.WriteLine("MIGRATION DONE");
     var services = scope.ServiceProvider;
     var serv = scope.ServiceProvider.GetRequiredService<IAccountServices>();
 
