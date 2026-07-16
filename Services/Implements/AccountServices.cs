@@ -72,28 +72,92 @@ namespace BarberSalon.Services.Implements
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
             }
-            string email = "admin@Barber.com";
+            string emailAdmin = "admin@example.com";
+            string emailEmployees = "employee@example.com";
+            string emailCustomer = "customer@example.com";
 
-            var admin = await _usermanager.FindByEmailAsync(email);
+            // Siding Data For Testing 
+
+            // employee 
+            var employee = await _usermanager.FindByEmailAsync(emailEmployees);
+
+            if (employee == null)
+            {
+                employee = new ApplicationUser
+                {
+                    FullName = "Hair Cut Test Employee",
+                    UserName = emailEmployees,
+                    Email = emailEmployees,
+                    PhoneNumber = "70111222",
+                    EmailConfirmed = true
+                };
+
+                var result = await _usermanager.CreateAsync(employee, "Employee123");
+
+                if (result.Succeeded)
+                {
+                    await _usermanager.AddToRoleAsync(employee, "Employee");
+
+                    _db.Employees.Add(new Employee
+                    {
+                        UserId = employee.Id,
+                        Name = employee.FullName,
+                        Phone = employee.PhoneNumber!,
+                        Specialization = "Hair Cut",
+                        ExperienceYears = 5,
+                        ImageUrl = null,
+                        IsActive = true
+                    });
+
+                    await _db.SaveChangesAsync();
+                }
+            }
+            // customer 
+            var customer = await _usermanager.FindByEmailAsync(emailCustomer);
+
+            if (customer == null)
+            {
+                customer = new ApplicationUser
+                {
+                    FullName = "Test Customer",
+                    UserName = emailCustomer,
+                    Email = emailCustomer,
+                    PhoneNumber = "71122334",
+                    EmailConfirmed = true
+                };
+
+                var result = await _usermanager.CreateAsync(customer, "Customer123");
+
+                if (result.Succeeded)
+                {
+                    await _usermanager.AddToRoleAsync(customer, "Customer");
+                }
+            }
+            // admin 
+            var admin = await _usermanager.FindByEmailAsync(emailAdmin);
+
 
             if (admin == null)
             {
                 admin = new ApplicationUser
                 {
                     FullName = "System Admin",
-                    UserName = email,
-                    Email = email,
+                    UserName = emailAdmin,
+                    Email = emailAdmin,
                     // its mean trust the email imagine as confirmation via gmail 
                     EmailConfirmed = true
                 };
 
-                var result = await _usermanager.CreateAsync(admin, "test123");
+                var result = await _usermanager.CreateAsync(admin, "Admin123");
 
                 if (result.Succeeded)
                 {
                     await _usermanager.AddToRoleAsync(admin, "Admin");
                 }
             }
+            // === Siding Data For Testings ===
+
+
         }
     }
 }
