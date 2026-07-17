@@ -1,4 +1,5 @@
-﻿using BarberSalon.Models;
+﻿using BarberSalon.DTO;
+using BarberSalon.Models;
 using BarberSalon.Models.BindingModel;
 using BarberSalon.Models.Enum;
 
@@ -45,15 +46,21 @@ namespace BarberSalon.Services.Interfaces
         public  Task AddService(BarberSalon.Models.Service s);
 
         public  Task updateService(BarberSalon.Models.Service s);
+        public  Task<List<MonthlyRevenueDto>> GetMothlyRevenue();
 
 
 
-        public  Task<List<BarberSalon.Models.Order>> GetOrders();
+        public Task<List<BarberSalon.Models.Order>> GetOrders();
 
+        public  Task<List<AppointmentStatusVM>> GetAppointmentStatusCount();
 
+        public  Task<List<ServiceBookingVM>> GetMostBookedServices();
 
+        public  Task<List<EmployeeBookingVM>> GetTopEmployees();
 
-        public  Task updateOrder(int id, OrderStatus status);
+        public Task<(int customerCount, int employeeCount, int orderCount, decimal revenue)> GetAllData();
+
+        public Task updateOrder(int id, OrderStatus status);
 
 
     }

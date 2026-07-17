@@ -1,8 +1,10 @@
 ﻿using BarberSalon.Data;
+using BarberSalon.DTO;
 using BarberSalon.Models;
 using BarberSalon.Models.BindingModel;
 using BarberSalon.Models.Enum;
 using BarberSalon.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BarberSalon.Services.Implements
@@ -10,9 +12,11 @@ namespace BarberSalon.Services.Implements
     public class AdminService : IAdminService
     {
         public AppDbContext _db;
-        public AdminService(AppDbContext db)
+        public UserManager<ApplicationUser> _userManager;
+        public AdminService(AppDbContext db, UserManager<ApplicationUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public async Task<List<WorkingHour>> GetEmployeeSchedule(string employeeId)
@@ -279,6 +283,78 @@ namespace BarberSalon.Services.Implements
             }
             x.Status = status;
             await _db.SaveChangesAsync();
+        }
+        /// Dashboard /// 
+        public async Task<List<MonthlyRevenueDto>> GetMothlyRevenue()
+        {
+            return await _db.Payments
+            .Where(p => p.PaymentStatus == StatusOfPayment.Paid)
+            .GroupBy(p => p.PaymentDate.Month)
+            .Select(g => new MonthlyRevenueDto
+            {
+                Month = g.Key,
+                Revenue = g.Sum(x => x.Amount)
+            })
+            .OrderBy(x => x.Month)
+            .ToListAsync();
+        }
+        public async Task<(int customerCount, int employeeCount, int orderCount, decimal revenue)> GetAllData()
+        {
+            var customers = await _userManager.GetUsersInRoleAsync("Customer");
+
+            var customerCount = customers.Count;
+            var employeeCount = await _db.Employees.CountAsync(e => e.IsActive);
+            var orderCount = await _db.Orders.CountAsync(o => o.Status != OrderStatus.Cancelled);
+            var revenue = await _db.Payments.Where(p => p.PaymentStatus == StatusOfPayment.Paid).SumAsync(p => p.Amount);
+          
+            return (customerCount, employeeCount, orderCount, revenue);
+        }
+       public async  Task<List<AppointmentStatusVM>> GetAppointmentStatusCount()
+        {
+            var result = await _db.Appointments
+                .GroupBy(a => a.Status)
+                .Select(g => new AppointmentStatusVM
+                {
+                    Status = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+            return result;
+        }
+
+        public async Task<List<ServiceBookingVM>> GetMostBookedServices()
+        {
+            var result = await _db.Appointments
+                .Include(a => a.Service)
+                .GroupBy(a => a.Service.Name)
+                .Select(g => new ServiceBookingVM
+                {
+                    ServiceName = g.Key,
+                    BookingCount = g.Count()
+                })
+                .OrderByDescending(x => x.BookingCount)
+                .Take(5)
+                .ToListAsync();
+            return result;
+        }
+        public async Task<List<EmployeeBookingVM>> GetTopEmployees()
+        {
+            var result = await _db.Appointments
+
+                .Include(a => a.Employee)
+                .GroupBy(a => a.Employee.Name)
+                .Select(g => new EmployeeBookingVM
+                {
+                    EmployeeName = g.Key,
+
+                    BookingCount = g.Count()
+                })
+                .OrderByDescending(x => x.BookingCount)
+                .Take(5)
+                .ToListAsync();
+
+
+            return result;
         }
     }
 }

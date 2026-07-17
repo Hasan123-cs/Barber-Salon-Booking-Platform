@@ -68,6 +68,7 @@ Employees can:
 
 Administrators can:
 
+- Access a comprehensive dashboard containing store statistics, revenue analytics, and interactive charts.
 - Manage products, categories, and services.
 - Manage employees.
 - Assign services to employees.

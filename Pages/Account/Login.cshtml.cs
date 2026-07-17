@@ -26,7 +26,7 @@ namespace BarberSalon.Pages.Account
             var usercheck = await _service.LoginUser(_login);
             if (usercheck == 1)
             {
-                return RedirectToPage("/Admin/Category/Index");
+                return RedirectToPage("/Admin/Dashboard/Index");
 
             }
             else if (usercheck == 2)

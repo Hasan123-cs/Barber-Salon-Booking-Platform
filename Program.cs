@@ -77,6 +77,7 @@ using (var scope = app.Services.CreateScope())
 
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     // do migration for docker when run 
+    // just for debuging
     Console.WriteLine("START MIGRATION");
 
     db.Database.Migrate();

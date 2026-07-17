@@ -1,0 +1,62 @@
+﻿
+body {
+    background: #f5f7fb;
+}
+
+.dashboard-title {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.card-stat {
+    border: none;
+    border-radius: 15px;
+    transition: .3s;
+}
+
+    .card-stat:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0,0,0,.15);
+    }
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    color: white;
+    font-size: 25px;
+}
+
+.bg-blue {
+    background: #0d6efd;
+}
+
+.bg-green {
+    background: #198754;
+}
+
+.bg-orange {
+    background: #fd7e14;
+}
+
+.bg-danger2 {
+    background: #dc3545;
+}
+
+.chart-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+}
+
+.table-card {
+    border: none;
+    border-radius: 15px;
+}
+
+canvas {
+    height: 350px !important;
+}
