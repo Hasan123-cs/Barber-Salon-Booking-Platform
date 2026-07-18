@@ -1,101 +1,183 @@
 ﻿@page
 @model BarberSalon.Pages.Admin.Appointments.IndexModel;
+
 @{
     ViewData["Title"] = "Appointment Management";
     Layout = "AdminLayout";
-
 }
+
 
 <div class="container py-4">
 
+
     <div class="card shadow">
 
+
         <div class="card-header bg-dark text-white">
+
             <h3 class="mb-0">
+
                 <i class="bi bi-calendar-check"></i>
+
                 Appointment Management
+
             </h3>
+
         </div>
+
+
 
         <div class="card-body">
 
-            <table class="table table-hover align-middle">
 
-                <thead class="table-dark">
+            <div class="table-responsive">
 
-                    <tr>
-                        <th>Customer</th>
-                        <th>Employee</th>
-                        <th>Service</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Notes</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
 
-                </thead>
+                <table class="table table-hover align-middle">
 
-                <tbody>
 
-                @foreach (var appointment in Model.Appointments)
-                {
-                    <tr>
+                    <thead class="table-dark">
 
-                        <td>@appointment.User.FullName</td>
 
-                        <td>@appointment.Employee.Name</td>
+                        <tr>
 
-                        <td>@appointment.Service.Name</td>
+                            <th>Customer</th>
 
-                        <td>@appointment.AppointmentDate.ToShortDateString()</td>
+                            <th>Employee</th>
 
-                        <td>
-                            @appointment.StartTime -
-                            @appointment.EndTime
-                        </td>
+                            <th>Service</th>
 
-                        <td>@appointment.Notes</td>
-                            <form method="post">
-                        <td>
+                            <th>Date</th>
+
+                            <th>Time</th>
+
+                            <th>Notes</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+
+                    </thead>
 
 
 
-                                <input type="hidden" name="AppointmentId" value="@appointment.Id"/>
+                    <tbody>
 
-                                <select name="Status" class="form-select">
 
-                                    @foreach (var status in Enum.GetValues<BarberSalon.Models.Enum.AppointmentStatus>())
-                                    {
-                                        <option value="@status"
-                                                selected="@(status == appointment.Status)">
-                                            @status
-                                        </option>
-                                    }
+                        @foreach (var appointment in Model.Appointments)
+                        {
 
-                                </select>
+                            <tr>
 
-                        </td>
 
-                        <td>
+                                <td>
+                                    @appointment.User.FullName
+                                </td>
 
-                                <button class="btn btn-success btn-sm">
-                                    Update
-                                </button>
 
-                            
+                                <td>
+                                    @appointment.Employee.Name
+                                </td>
 
-                        </td>
-                        </form>
-                    </tr>
-                }
 
-                </tbody>
+                                <td>
+                                    @appointment.Service.Name
+                                </td>
 
-            </table>
+
+                                <td>
+                                    @appointment.AppointmentDate.ToShortDateString()
+                                </td>
+
+
+                                <td>
+
+                                    @appointment.StartTime -
+                                    @appointment.EndTime
+
+                                </td>
+
+
+                                <td>
+                                    @appointment.Notes
+                                </td>
+
+
+
+                                <form method="post">
+
+
+                                    <td>
+
+
+                                        <input type="hidden"
+                                               name="AppointmentId"
+                                               value="@appointment.Id" />
+
+
+
+                                        <select name="Status"
+                                                class="form-select">
+
+
+                                            @foreach (var status in Enum.GetValues<BarberSalon.Models.Enum.AppointmentStatus>())
+                                            {
+
+                                                <option value="@status"
+                                                        selected="@(status == appointment.Status)">
+
+                                                    @status
+
+                                                </option>
+
+                                            }
+
+
+                                        </select>
+
+
+                                    </td>
+
+
+
+
+                                    <td>
+
+
+                                        <button class="btn btn-success btn-sm">
+
+                                            Update
+
+                                        </button>
+
+
+                                    </td>
+
+
+                                </form>
+
+
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
 
         </div>
 
+
     </div>
+
 
 </div>

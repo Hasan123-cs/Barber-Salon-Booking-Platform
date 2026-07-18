@@ -21,7 +21,6 @@
 
             <form method="post" enctype="multipart/form-data">
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="row">
 
@@ -82,6 +81,8 @@
 
                         <input asp-for="Input.Name"
                                class="form-control"/>
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+
 
                     </div>
 
@@ -91,6 +92,8 @@
 
                         <input asp-for="Input.Specialization"
                                class="form-control"/>
+                        <span asp-validation-for="Input.Specialization" class="text-danger"></span>
+
 
                     </div>
                     <div class="mt-4">
@@ -127,6 +130,8 @@
 
                         <input asp-for="Input.ExperienceYears"
                                class="form-control"/>
+                        <span asp-validation-for="Input.ExperienceYears" class="text-danger"></span>
+
 
                     </div>
 
@@ -137,6 +142,7 @@
                         <input asp-for="EmployeeImage"
                                type="file"
                                class="form-control"/>
+                               
 
                     </div>
 
