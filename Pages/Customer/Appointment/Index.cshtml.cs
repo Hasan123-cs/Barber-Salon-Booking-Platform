@@ -28,7 +28,7 @@ namespace BarberSalon.Pages.Customer.Appointment
         public BarberSalon.Models.Appointment Appointment { get; set; }
 
         [BindProperty]
-        public DateTime SelectedDate { get; set; }
+        public DateTime SelectedDate { get; set; } = DateTime.Now;
 
         [BindProperty]
         public string SelectedTime { get; set; }
@@ -46,7 +46,9 @@ namespace BarberSalon.Pages.Customer.Appointment
         }
         public async Task<IActionResult> OnPostLoadTimes()
         {
+
             Service = await _custService.LoadServiceById(Appointment.ServiceId);
+            SelectedDate = SelectedDate;
 
             EmployeeList = await _service.GetAllEmployee(Appointment.ServiceId);
            
@@ -62,8 +64,13 @@ namespace BarberSalon.Pages.Customer.Appointment
 
             EmployeeList = await _service.GetAllEmployee(Appointment.ServiceId);
             AvailableTimes = await _custService.GetAvailableTimes(Appointment.EmployeeId, Appointment.ServiceId, SelectedDate);
-            
-            // fix problem of receive the same time from many side (customer ) 
+
+
+            foreach (var x in AvailableTimes)
+            {
+                Console.WriteLine("time " + x);
+            }
+
             if (!AvailableTimes.Contains(SelectedTime))
             {
                 ModelState.AddModelError("", "This time is no longer available");
