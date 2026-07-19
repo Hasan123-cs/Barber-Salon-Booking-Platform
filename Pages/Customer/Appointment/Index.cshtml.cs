@@ -46,13 +46,18 @@ namespace BarberSalon.Pages.Customer.Appointment
         }
         public async Task<IActionResult> OnPostLoadTimes()
         {
-
+            
             Service = await _custService.LoadServiceById(Appointment.ServiceId);
             SelectedDate = SelectedDate;
 
             EmployeeList = await _service.GetAllEmployee(Appointment.ServiceId);
-           
-
+            // here we can use it in client side using min attribute but in client bypass since the attacker can enter devtools and 
+            // use paste date then send normaly to server 
+            if (SelectedDate.Date < DateTime.UtcNow.Date)
+            {
+                ModelState.AddModelError("", "Cannot select a past date");
+                return Page();
+            }
             AvailableTimes = await _custService.GetAvailableTimes(Appointment.EmployeeId,Appointment.ServiceId,SelectedDate);
 
 
@@ -61,6 +66,7 @@ namespace BarberSalon.Pages.Customer.Appointment
         public async Task<IActionResult> OnPostBook()
         {
             Service = await _custService.LoadServiceById(Appointment.ServiceId);
+            SelectedDate = SelectedDate;
 
             EmployeeList = await _service.GetAllEmployee(Appointment.ServiceId);
             AvailableTimes = await _custService.GetAvailableTimes(Appointment.EmployeeId, Appointment.ServiceId, SelectedDate);
