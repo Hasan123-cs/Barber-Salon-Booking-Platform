@@ -23,8 +23,6 @@ BarberSalon
 ├── Services
 │   └── Application business logic and operations
 │
-├── Areas
-│   └── Identity pages and authentication management
 │
 ├── Migrations
 │   └── Database schema changes managed by EF Core
