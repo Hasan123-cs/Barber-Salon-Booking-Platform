@@ -61,7 +61,7 @@ namespace BarberSalon.Services.Implements
         }
         public async Task<List<BarberSalon.Models.Category>> GetallCategory()
         {
-            return await _db.Categories.ToListAsync();
+            return await _db.Categories.Include(r=>r.Products).ToListAsync();
         }
         public async Task ToogleStatus(int id)
         {
