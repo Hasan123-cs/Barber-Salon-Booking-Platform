@@ -161,7 +161,6 @@ namespace BarberSalon.Services.Implements
 
             if (existing == null)
                 return;
-
             Console.WriteLine($"Before: {existing.StartTime} - {existing.EndTime}");
 
             existing.StartTime = s1.StartTime;

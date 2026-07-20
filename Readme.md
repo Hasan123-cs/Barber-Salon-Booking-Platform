@@ -1,4 +1,4 @@
-﻿# Classic Barber Salon Management System
+﻿﻿# Classic Barber Salon Management System
 
 ## Project Overview
 
@@ -53,7 +53,6 @@ Before running the project locally, make sure you have the following installed:
 ```bash
 git clone https://github.com/Hasan123-cs/Barber-Salon-Booking-Platform.git
 
-cd Barber-Salon-Booking-Platform
 ```
 
 ---
@@ -84,21 +83,15 @@ SUPABASE_KEY=Your Supabase API Key
 
 ---
 
-# Database Setup & Migrations
+# Database Initialization
 
-Create the PostgreSQL database, then apply Entity Framework Core migrations.
+The application automatically applies pending Entity Framework Core migrations on startup using:
 
-```bash
-dotnet ef database update
+```csharp
+db.Database.Migrate();
 ```
 
-If no migrations exist, create them using:
-
-```bash
-dotnet ef migrations add InitialCreate
-
-dotnet ef database update
-```
+No manual migration command is required.
 
 ---
 
