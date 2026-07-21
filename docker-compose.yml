@@ -41,6 +41,8 @@
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       CONNECTION_STRING: Host=postgres;Port=5432;Database=BarberSalonDB;Username=postgres;Password=${DB_PASSWORD}
+      Supabase__Url: "${SUPABASE_URL}"
+      Supabase__Key: "${SUPABASE_KEY}"
 
 
 volumes:

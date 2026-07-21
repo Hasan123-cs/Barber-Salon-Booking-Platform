@@ -18,9 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration["ConnectionStrings:DefaultConnection"] =Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
-builder.Configuration["Supabase:Url"] =Environment.GetEnvironmentVariable("SUPABASE_URL");
+builder.Configuration["Supabase:Url"] = Environment.GetEnvironmentVariable("Supabase__Url");
 
-builder.Configuration["Supabase:Key"] =Environment.GetEnvironmentVariable("SUPABASE_KEY");
+builder.Configuration["Supabase:Key"] = Environment.GetEnvironmentVariable("Supabase__Key");
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IAccountServices, AccountServices>();
