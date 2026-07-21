@@ -54,6 +54,7 @@ Before running the project locally, make sure you have the following installed:
 git clone https://github.com/Hasan123-cs/Barber-Salon-Booking-Platform.git
 
 ```
+cd Barber-Salon-Booking-Platform
 
 ---
 
